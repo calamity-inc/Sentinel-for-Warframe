@@ -91,6 +91,7 @@ namespace Sentinel
 					)
 				{
 					// We have left the squad.
+					host_name = local_name;
 					std::lock_guard lock(squad_members_mtx);
 					squad_members.clear();
 					Overlay::redraw();
