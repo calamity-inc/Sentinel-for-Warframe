@@ -8,6 +8,9 @@ struct SquadMember
 {
 	std::string name;
 	std::string mm;
+	// mm value of Windows client looks like this: "AB0D55C3C7B9CD00F768C265"
+	// For cross-platform clients, mm value is either their username or looks like this: "S]F;JEV7B5';K%&           @8P(7=P-'- $          "
+	// IP address & port are only available for Windows clients because there's no cross-platform VOIP.
 	std::string ip;
 	std::string port;
 
