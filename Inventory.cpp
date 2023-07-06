@@ -112,7 +112,7 @@ namespace Sentinel
 		mainWindowRedraw();
 	}
 
-	int Inventory::getItemCount(const std::string& type)
+	int Inventory::getOwnedCount(const std::string& type)
 	{
 		for (const auto& item : root->asObj().at("MiscItems").asArr())
 		{

@@ -119,7 +119,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 				y += 20;
 				for (const auto& item : invasion_items)
 				{
-					const auto owned = Inventory::getItemCount(item.first);
+					const auto owned = Inventory::getOwnedCount(item.first);
 					rt.drawText(2, y, soup::format("- {}x {}", item.second, codename_to_english(item.first)), soup::RasterFont::simple8(), owned ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
 					y += 10;
 				}
