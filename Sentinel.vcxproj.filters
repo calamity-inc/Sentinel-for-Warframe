@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="solarmap.hpp" />
+    <ClInclude Include="squad.hpp" />
+    <ClInclude Include="mission.hpp" />
+    <ClInclude Include="codenames.hpp" />
+    <ClInclude Include="screenshot.hpp" />
+    <ClInclude Include="Inventory.hpp" />
+    <ClInclude Include="LogDevotee.hpp" />
+    <ClInclude Include="stdout.hpp" />
+    <ClInclude Include="GeoIpService.hpp" />
+    <ClInclude Include="ProcessWatcher.hpp" />
+    <ClInclude Include="WindowCommons.hpp" />
+    <ClInclude Include="Overlay.hpp" />
+    <ClInclude Include="WorldState.hpp" />
+    <ClInclude Include="solnodes.hpp" />
+    <ClInclude Include="main.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="codenames.cpp" />
+    <ClCompile Include="LogDevotee.cpp" />
+    <ClCompile Include="GeoIpService.cpp" />
+    <ClCompile Include="ProcessWatcher.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Overlay.cpp" />
+    <ClCompile Include="WorldState.cpp" />
+    <ClCompile Include="solnodes.cpp" />
+  </ItemGroup>
+</Project>
