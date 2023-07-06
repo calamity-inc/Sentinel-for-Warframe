@@ -43,8 +43,6 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 	{
 		rt.fill({ 0x10, 0x10, 0x10 });
 
-		WindowCommons::get(w).draw(rt);
-
 		rt.drawText(2, 2, soup::format("Welcome to Sentinel, {}!", local_name.empty() ? "Tenno" : local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
 
 		if (Inventory::data_as_of)
@@ -127,6 +125,8 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 				}
 			}
 		}
+
+		WindowCommons::get(w).draw(rt, { 0x10, 0x10, 0x10 });
 	});
 	w.setMouseInformer([](soup::Window w, unsigned int x, unsigned int y) -> soup::Window::on_click_t
 	{

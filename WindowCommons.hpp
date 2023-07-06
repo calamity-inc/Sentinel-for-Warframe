@@ -26,8 +26,10 @@ namespace Sentinel
 			return w.customData().get<WindowCommons>();
 		}
 
-		void draw(soup::RenderTarget& rt)
+		void draw(soup::RenderTarget& rt, soup::Rgb background)
 		{
+			rt.drawRect(rt.width - 40, 0, 40, 20, background);
+
 			if (x_focused)
 			{
 				rt.drawRect(rt.width - 20, 0, 20, 20, soup::Rgb::RED);
