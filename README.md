@@ -8,7 +8,7 @@ Sentinel GUI:
 - Invasions Helper: Shows rare invasion rewards and indicates if they're already owned.
 
 In-game overlay:
-- Squad Location: Shows the names of your squad members along with their countries (according to their IP addresses).
+- Squad Overlay: Shows additional info about your squad members (Is host, IP-based location, ISP, is using VPN)
 - Rescue Helper: Tells you which cell the hostage is in if you're the host.
 - Duviri Tarot: Tells you what warframes and weapons you will be able to choose in the cave. This is basically the same as having rank 4 or higher of the Opportunity intrinsic.
 

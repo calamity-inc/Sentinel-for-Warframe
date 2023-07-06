@@ -7,6 +7,7 @@
 #include <soup/RasterFont.hpp>
 #include <soup/Rgb.hpp>
 #include <soup/RenderTarget.hpp>
+#include <soup/string.hpp>
 #include <soup/Vector2.hpp>
 #include <soup/Window.hpp>
 
@@ -144,20 +145,34 @@ namespace Sentinel
 					std::lock_guard lock(squad_members_mtx);
 					for (const auto& member : squad_members)
 					{
-						std::string location_name = "???";
+						std::vector<std::string> trivia{};
+						if (member.getName() == host_name)
+						{
+							trivia.emplace_back("Host");
+						}
 						if (!member.ip.empty())
 						{
 							if (GeoIpService::available)
 							{
 								if (auto loc = GeoIpService::get().getLocationByIpv4(IpAddr(member.ip).getV4NativeEndian()))
 								{
-									location_name = getCountryName(loc->country_code.c_str());
+									trivia.emplace_back(getCountryName(loc->country_code.c_str()));
+								}
+								if (auto as = GeoIpService::get().getAsByIpv4(IpAddr(member.ip).getV4NativeEndian()))
+								{
+									trivia.emplace_back(as->name);
+									if (as->isHosting())
+									{
+										trivia.emplace_back("VPN");
+									}
 								}
 							}
-							//rt.drawCentredText(x, y, soup::format("{} - {} - {}", member.getName(), member.ip, location_name), RasterFont::simple8(), Rgb::WHITE, text_scale);
 						}
-						rt.drawCentredText(x, y, soup::format("{}: {}", member.getName(), location_name), RasterFont::simple8(), Rgb::WHITE, text_scale);
-						y += 40;
+						if (!trivia.empty())
+						{
+							rt.drawCentredText(x, y, soup::format("{}: {}", member.getName(), string::join(trivia, ", ")), RasterFont::simple8(), Rgb::WHITE, text_scale);
+							y += 40;
+						}
 					}
 				}
 				if (amHost()

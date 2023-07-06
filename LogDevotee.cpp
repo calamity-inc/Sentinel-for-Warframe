@@ -132,6 +132,7 @@ namespace Sentinel
 				else if (msg.substr(0, 29) == "HOST MIGRATION: local client ") // ... selected as the new host
 				{
 					host_name = local_name;
+					Overlay::redraw();
 				}
 				else if (msg.substr(0, 29) == "OnStateStarted, mission type=")
 				{
