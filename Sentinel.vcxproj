@@ -173,6 +173,7 @@
     <ClInclude Include="mission.hpp" />
     <ClInclude Include="Overlay.hpp" />
     <ClInclude Include="ProcessWatcher.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="screenshot.hpp" />
     <ClInclude Include="solarmap.hpp" />
     <ClInclude Include="solnodes.hpp" />
@@ -191,6 +192,12 @@
     <ClCompile Include="ProcessWatcher.cpp" />
     <ClCompile Include="solnodes.cpp" />
     <ClCompile Include="WorldState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sentinel.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

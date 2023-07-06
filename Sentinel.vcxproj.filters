@@ -16,6 +16,7 @@
     <ClInclude Include="WorldState.hpp" />
     <ClInclude Include="solnodes.hpp" />
     <ClInclude Include="main.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -27,5 +28,11 @@
     <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="solnodes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sentinel.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
 </Project>

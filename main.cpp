@@ -37,7 +37,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 	WorldState::download();
 
-	w = soup::Window::create("Sentinel", 400, 200);
+	w = soup::Window::create("Sentinel", 400, 200, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
 	WindowCommons::init(w);
 	w.setDrawFunc([](soup::Window w, soup::RenderTarget& rt)
 	{
