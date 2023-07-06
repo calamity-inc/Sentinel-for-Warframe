@@ -4,6 +4,7 @@
 
 #include <soup/aes.hpp>
 #include <soup/format.hpp>
+#include <soup/joaat.hpp>
 #include <soup/string.hpp>
 #include <soup/time.hpp>
 
@@ -127,6 +128,19 @@ namespace Sentinel
 			{
 				return item.asObj().at("ItemCount").asInt();
 			}
+		}
+		return 0;
+	}
+
+	bool Inventory::getCraftedCount(const std::string& type)
+	{
+		switch (soup::joaat::hash(type))
+		{
+		case soup::joaat::hash("/Lotus/Types/Recipes/Components/OrokinCatalystBlueprint"):
+			return getOwnedCount("/Lotus/Types/Items/MiscItems/OrokinCatalyst");
+
+		case soup::joaat::hash("/Lotus/Types/Recipes/Components/OrokinReactorBlueprint"):
+			return getOwnedCount("/Lotus/Types/Items/MiscItems/OrokinReactor");
 		}
 		return 0;
 	}

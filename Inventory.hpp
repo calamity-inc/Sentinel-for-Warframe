@@ -41,5 +41,6 @@ namespace Sentinel
 		static void load();
 
 		[[nodiscard]] static int getOwnedCount(const std::string& type);
+		[[nodiscard]] static bool getCraftedCount(const std::string& type);
 	};
 }
