@@ -119,8 +119,27 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 				y += 20;
 				for (const auto& item : invasion_items)
 				{
+					std::string text = soup::format("- {}x {}", item.second, codename_to_english(item.first));
 					const auto owned = Inventory::getOwnedCount(item.first);
-					rt.drawText(2, y, soup::format("- {}x {}", item.second, codename_to_english(item.first)), soup::RasterFont::simple8(), owned ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
+					const auto crafted = Inventory::getCraftedCount(item.first);
+					if (owned || crafted)
+					{
+						text.append(" (");
+						if (owned)
+						{
+							text.append(soup::format("{} owned", owned));
+						}
+						if (crafted)
+						{
+							if (owned)
+							{
+								text.append(", ");
+							}
+							text.append(soup::format("{} crafted", crafted));
+						}
+						text.push_back(')');
+					}
+					rt.drawText(2, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
 					y += 10;
 				}
 			}
