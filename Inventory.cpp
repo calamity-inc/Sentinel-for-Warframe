@@ -121,6 +121,13 @@ namespace Sentinel
 				return item.asObj().at("ItemCount").asInt();
 			}
 		}
+		for (const auto& item : root->asObj().at("Recipes").asArr())
+		{
+			if (item.asObj().at("ItemType").asStr() == type)
+			{
+				return item.asObj().at("ItemCount").asInt();
+			}
+		}
 		return 0;
 	}
 }
