@@ -26,7 +26,11 @@ namespace Sentinel
 			{
 				if (hrt.res.has_value())
 				{
-					println("WorldState", "Download succeeded.");
+					if (WorldState::logging)
+					{
+						println("WorldState", "Download succeeded.");
+						WorldState::logging = false;
+					}
 					WorldState::data_as_of = soup::time::unixSeconds();
 					WorldState::root = soup::json::decode(hrt.res->body);
 					mainWindowRedraw();
@@ -34,6 +38,7 @@ namespace Sentinel
 				else
 				{
 					println("WorldState", "Download failed.");
+					WorldState::logging = true;
 				}
 				WorldState::request_in_flight = false;
 				setWorkDone();
@@ -46,6 +51,9 @@ namespace Sentinel
 		SOUP_ASSERT(!request_in_flight);
 		request_in_flight = true;
 		sched.add<WorldStateDownloadTask>();
-		println("WorldState", "Beginning download.");
+		if (logging)
+		{
+			println("WorldState", "Beginning download.");
+		}
 	}
 }
