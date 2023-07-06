@@ -24,9 +24,14 @@ struct SquadMember
 };
 
 inline std::string local_name;
-inline bool am_host;
+inline std::string host_name;
 inline std::recursive_mutex squad_members_mtx{};
 inline std::vector<SquadMember> squad_members{};
+
+[[nodiscard]] inline bool amHost() noexcept
+{
+	return local_name == host_name;
+}
 
 [[nodiscard]] inline std::vector<SquadMember>::iterator squadMemberByName(const std::string& name)
 {

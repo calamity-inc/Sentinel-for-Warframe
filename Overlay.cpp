@@ -160,7 +160,7 @@ namespace Sentinel
 						y += 40;
 					}
 				}
-				if (am_host
+				if (amHost()
 					&& current_missionType == "MT_RESCUE"
 					&& mission_stage == 1
 					)

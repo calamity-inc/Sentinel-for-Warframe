@@ -116,6 +116,18 @@ namespace Sentinel
 						std::cout << "[LogDevotee] Did not find a member with mm=" << data.substr(0, 24) << "\n";
 					}
 				}
+				else if (msg.substr(0, 24) == "JoinSquadSessionCallback")
+				{
+					host_name.clear();
+					host_name += msg.substr(msg.find("host name=") + 10);
+					host_name.erase(host_name.size() - 5); // platform indicator + "\r\n"
+				}
+				else if (msg.substr(0, 37) == "PrepareDemoCinematics.lua: Host name ")
+				{
+					host_name.clear();
+					host_name += msg.substr(37);
+					host_name.erase(host_name.size() - 5); // platform indicator + "\r\n"
+				}
 				else if (msg.substr(0, 29) == "OnStateStarted, mission type=")
 				{
 					current_missionType.clear();
@@ -132,7 +144,7 @@ namespace Sentinel
 				{
 					std::cout << "[LogDevotee] RescueEnterObjectiveRoomTransmission\n";
 					mission_stage = 1;
-					if (am_host)
+					if (amHost())
 					{
 						Overlay::redraw();
 					}
@@ -143,7 +155,7 @@ namespace Sentinel
 					if (mission_stage != 1)
 					{
 						mission_stage = 1;
-						if (am_host)
+						if (amHost())
 						{
 							Overlay::redraw();
 						}
@@ -153,7 +165,7 @@ namespace Sentinel
 				{
 					std::cout << "[LogDevotee] ObjectiveFoundRescueTransmission\n";
 					mission_stage = 2;
-					if (am_host)
+					if (amHost())
 					{
 						Overlay::redraw();
 					}
@@ -209,14 +221,21 @@ namespace Sentinel
 				if (sv.substr(0, 18) == R"(    levelOverride=)")
 				{
 					// When we're the host: ThemedSquadOverlay.lua: Host loading {...} with MissionInfo:
-					am_host = true;
+					if (!amHost())
+					{
+						std::cout << "[LogDevotee] We're starting a mission as the host, but " << host_name << " should be the host?!\n";
+						host_name = local_name;
+					}
 					current_levelOverride.clear();
 					current_levelOverride += sv.substr(18, sv.size() - 18 - 2);
 				}
 				else if (sv.substr(0, 23) == R"(    "levelOverride" : ")")
 				{
 					// When we're the client: Client loaded {"difficulty":"","voidTier":"VoidT1","name":"SolNode109_ActiveMission","quest":""} with MissionInfo:
-					am_host = false;
+					if (amHost())
+					{
+						std::cout << "[LogDevotee] We're starting a mission as a client, but we should be the host?!\n";
+					}
 					current_levelOverride.clear();
 					current_levelOverride += sv.substr(23, sv.size() - 23 - 4);
 				}
