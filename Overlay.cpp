@@ -190,7 +190,7 @@ namespace Sentinel
 					std::lock_guard lock(duviri_items_mtx);
 					for (const auto& item : duviri_items)
 					{
-						if (item.category == IC_POWERSUITE)
+						if (item.category == IC_POWERSUIT)
 						{
 							rt.drawCentredText(x, y, soup::format("Warframe: {}", codename_to_english(item.codename)), RasterFont::simple8(), Rgb::WHITE, text_scale);
 							y += 40;

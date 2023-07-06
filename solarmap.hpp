@@ -8,7 +8,7 @@ enum ItemCategory
 {
 	IC_SECONDARY = 0,
 	IC_PRIMARY = 1,
-	IC_POWERSUITE = 3,
+	IC_POWERSUIT = 3,
 	IC_MELEE = 5,
 };
 
