@@ -4,7 +4,6 @@
     <ClInclude Include="solarmap.hpp" />
     <ClInclude Include="squad.hpp" />
     <ClInclude Include="mission.hpp" />
-    <ClInclude Include="codenames.hpp" />
     <ClInclude Include="screenshot.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="LogDevotee.hpp" />
@@ -14,20 +13,21 @@
     <ClInclude Include="WindowCommons.hpp" />
     <ClInclude Include="Overlay.hpp" />
     <ClInclude Include="WorldState.hpp" />
-    <ClInclude Include="solnodes.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="data.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="codenames.cpp" />
+    <ClCompile Include="data_codenames.cpp" />
     <ClCompile Include="LogDevotee.cpp" />
     <ClCompile Include="GeoIpService.cpp" />
     <ClCompile Include="ProcessWatcher.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="WorldState.cpp" />
-    <ClCompile Include="solnodes.cpp" />
+    <ClCompile Include="data_solnodes.cpp" />
+    <ClCompile Include="data_recipes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Sentinel.rc" />

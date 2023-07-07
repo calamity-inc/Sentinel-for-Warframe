@@ -8,6 +8,7 @@
 #include <soup/string.hpp>
 #include <soup/time.hpp>
 
+#include "data.hpp"
 #include "main.hpp"
 #include "stdout.hpp"
 
@@ -134,13 +135,9 @@ namespace Sentinel
 
 	bool Inventory::getCraftedCount(const std::string& type)
 	{
-		switch (soup::joaat::hash(type))
+		if (auto e = recipe_to_result_map.find(type); e != recipe_to_result_map.end())
 		{
-		case soup::joaat::hash("/Lotus/Types/Recipes/Components/OrokinCatalystBlueprint"):
-			return getOwnedCount("/Lotus/Types/Items/MiscItems/OrokinCatalyst");
-
-		case soup::joaat::hash("/Lotus/Types/Recipes/Components/OrokinReactorBlueprint"):
-			return getOwnedCount("/Lotus/Types/Items/MiscItems/OrokinReactor");
+			return getOwnedCount(e->second);
 		}
 		return 0;
 	}

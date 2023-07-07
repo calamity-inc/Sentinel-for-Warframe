@@ -1,4 +1,4 @@
-﻿#include "solnodes.hpp"
+﻿#include "data.hpp"
 
 // https://warframe.fandom.com/wiki/World_State#Node
 

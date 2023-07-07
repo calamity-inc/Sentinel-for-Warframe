@@ -11,7 +11,7 @@
 #include <soup/Vector2.hpp>
 #include <soup/Window.hpp>
 
-#include "codenames.hpp"
+#include "data.hpp"
 #include "GeoIpService.hpp"
 #include "LogDevotee.hpp"
 #include "mission.hpp"

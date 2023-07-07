@@ -1,4 +1,4 @@
-#include "codenames.hpp"
+#include "data.hpp"
 
 // https://warframe.fandom.com/wiki/Module:InternalNames
 
@@ -3499,7 +3499,4 @@ std::unordered_map<std::string, std::string> codename_to_english_map = {
 {"NpcThrowGrenadeWeapon", "Hand Grenade"},
 {"PlatinumCredits", "Platinum"},
 {"PrimeToken", "Regal Aya"},
-
-{"/Lotus/Types/Recipes/Components/OrokinCatalystBlueprint", "Orokin Catalyst Blueprint"},
-{"/Lotus/Types/Recipes/Components/OrokinReactorBlueprint", "Orokin Reactor Blueprint"},
 };

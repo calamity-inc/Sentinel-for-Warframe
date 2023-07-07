@@ -165,7 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="codenames.hpp" />
+    <ClInclude Include="data.hpp" />
     <ClInclude Include="GeoIpService.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="LogDevotee.hpp" />
@@ -176,21 +176,21 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="screenshot.hpp" />
     <ClInclude Include="solarmap.hpp" />
-    <ClInclude Include="solnodes.hpp" />
     <ClInclude Include="squad.hpp" />
     <ClInclude Include="stdout.hpp" />
     <ClInclude Include="WindowCommons.hpp" />
     <ClInclude Include="WorldState.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="codenames.cpp" />
+    <ClCompile Include="data_codenames.cpp" />
     <ClCompile Include="GeoIpService.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="LogDevotee.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="ProcessWatcher.cpp" />
-    <ClCompile Include="solnodes.cpp" />
+    <ClCompile Include="data_recipes.cpp" />
+    <ClCompile Include="data_solnodes.cpp" />
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
