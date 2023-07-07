@@ -30,9 +30,18 @@
     <ClCompile Include="data_recipes.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Sentinel.rc" />
+    <Filter Include="resources">
+      <UniqueIdentifier>{3bf8b1b7-cad1-43c7-9375-09fa9086e756}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon.ico" />
+    <ResourceCompile Include="Sentinel.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico">
+      <Filter>resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
