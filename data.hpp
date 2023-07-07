@@ -7,7 +7,7 @@ extern std::unordered_map<std::string, std::string> codename_to_english_map;
 extern std::unordered_map<std::string, std::string> recipe_to_result_map;
 extern std::unordered_map<std::string, std::string> solnodes;
 
-inline std::string codename_to_english(const std::string& codename)
+[[nodiscard]] inline std::string codename_to_english(const std::string& codename)
 {
 	if (auto e = codename_to_english_map.find(codename); e != codename_to_english_map.end())
 	{
