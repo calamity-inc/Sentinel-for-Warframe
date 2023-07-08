@@ -14,5 +14,7 @@ function addFromExport($name)
 }
 
 addFromExport("ExportResources");
+addFromExport("ExportWarframes");
+addFromExport("ExportWeapons");
 
 fwrite($fh, "};\r\n");
