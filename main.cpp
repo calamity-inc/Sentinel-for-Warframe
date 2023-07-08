@@ -153,12 +153,15 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 		if (WorldState::root)
 		{
 			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
-			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60) // If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are not available
+			// If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are available on fortuna, instead.
+			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60)
 			{
 				drawItemsList(rt, 2, y, "CETUS BOUNTIES", getInterestingBountyRewards(cetus_syndicate));
 			}
-
-			drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewards(getSyndicate("SolarisSyndicate")));
+			else
+			{
+				drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewards(getSyndicate("SolarisSyndicate")));
+			}
 
 			std::vector<std::pair<std::string, int>> invasion_items{};
 			for (const auto& invasion : WorldState::root->asObj().at("Invasions").asArr())
