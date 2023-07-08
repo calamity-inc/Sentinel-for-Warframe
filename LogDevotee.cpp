@@ -180,6 +180,7 @@ namespace Sentinel
 				{
 					if (msg == "MapRedux.lua: RollDuviriOffers - Generating new Duviri offers\r\n")
 					{
+						std::lock_guard lock(duviri_items_mtx);
 						duviri_items.clear();
 					}
 					else if (auto i = msg.find(" generated as an ", 14); i != std::string::npos)
@@ -187,6 +188,7 @@ namespace Sentinel
 						Item item;
 						item.codename += msg.substr(14, i - 14);
 						item.category = (msg.at(msg.find(" Cave selection for category: ", i) + 30) - '0');
+						std::lock_guard lock(duviri_items_mtx);
 						duviri_items.emplace_back(std::move(item));
 						Overlay::redraw();
 					}
