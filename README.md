@@ -5,7 +5,7 @@ Sentinel is an external helper and overlay for Warframe.
 ## Features
 
 Sentinel GUI:
-- Bounty Helper: Show if Narmer bounties are available and if you own the respective Caliban blueprint already
+- Bounty Helper: Shows the current Narmer bounty's blueprint rewards and if you own them already.
 - Invasions Helper: Shows rare invasion rewards and indicates if they're already owned.
 
 In-game overlay:
