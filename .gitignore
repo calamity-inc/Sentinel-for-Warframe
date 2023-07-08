@@ -1,3 +1,6 @@
 .vs/
 Win32/
 x64/
+
+PublicExport/*.json
+PublicExport/*.txt
