@@ -87,14 +87,17 @@ static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& 
 		if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableARewards")
 		{
 			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientSystemsBlueprint", 1);
+			res.emplace_back("/Lotus/Types/Recipes/Weapons/NewWar/ArchonWhipBlueprint", 1);
 		}
 		else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards")
 		{
 			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientChassisBlueprint", 1);
+			res.emplace_back("/Lotus/Types/Recipes/Weapons/NewWar/ArchonDualDaggersBlueprint", 1);
 		}
 		else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableCRewards")
 		{
 			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientHelmetBlueprint", 1);
+			res.emplace_back("/Lotus/Types/Recipes/Weapons/NewWar/ArchonTridentBlueprint", 1);
 		}
 	}
 	return res;
