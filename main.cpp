@@ -62,28 +62,39 @@ static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& 
 	}
 }
 
-[[nodiscard]] static std::vector<std::pair<std::string, int>> getInterestingBountyRewardsFromSyndicate(const std::string& tag)
+[[nodiscard]] static const soup::JsonObject& getSyndicate(const std::string& tag)
 {
-	std::vector<std::pair<std::string, int>> res{};
 	for (const auto& syndicate : WorldState::root->asObj().at("SyndicateMissions").asArr())
 	{
 		if (syndicate.asObj().at("Tag").asStr() == tag)
 		{
-			for (const auto& job : syndicate.asObj().at("Jobs").asArr())
-			{
-				if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableARewards")
-				{
-					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientSystemsBlueprint", 1);
-				}
-				else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards")
-				{
-					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientChassisBlueprint", 1);
-				}
-				else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableCRewards")
-				{
-					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientHelmetBlueprint", 1);
-				}
-			}
+			return syndicate.asObj();
+		}
+	}
+	SOUP_ASSERT_UNREACHABLE;
+}
+
+[[nodiscard]] static std::time_t getExpiry(const soup::JsonObject& obj)
+{
+	return std::stoull(obj.at("Expiry").asObj().at("$date").asObj().at("$numberLong").asStr()) / 1000;
+}
+
+[[nodiscard]] static std::vector<std::pair<std::string, int>> getInterestingBountyRewards(const soup::JsonObject& syndicate)
+{
+	std::vector<std::pair<std::string, int>> res{};
+	for (const auto& job : syndicate.at("Jobs").asArr())
+	{
+		if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableARewards")
+		{
+			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientSystemsBlueprint", 1);
+		}
+		else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards")
+		{
+			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientChassisBlueprint", 1);
+		}
+		else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableCRewards")
+		{
+			res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientHelmetBlueprint", 1);
 		}
 	}
 	return res;
@@ -138,8 +149,13 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 		if (WorldState::root)
 		{
-			drawItemsList(rt, 2, y, "CETUS BOUNTIES", getInterestingBountyRewardsFromSyndicate("CetusSyndicate"));
-			drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewardsFromSyndicate("SolarisSyndicate"));
+			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
+			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60) // If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are not available
+			{
+				drawItemsList(rt, 2, y, "CETUS BOUNTIES", getInterestingBountyRewards(cetus_syndicate));
+			}
+
+			drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewards(getSyndicate("SolarisSyndicate")));
 
 			std::vector<std::pair<std::string, int>> invasion_items{};
 			for (const auto& invasion : WorldState::root->asObj().at("Invasions").asArr())
