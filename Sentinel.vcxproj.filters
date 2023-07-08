@@ -15,23 +15,34 @@
     <ClInclude Include="WorldState.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="data.hpp" />
+    <ClInclude Include="data.hpp">
+      <Filter>data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="data_codenames.cpp" />
     <ClCompile Include="LogDevotee.cpp" />
     <ClCompile Include="GeoIpService.cpp" />
     <ClCompile Include="ProcessWatcher.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="WorldState.cpp" />
-    <ClCompile Include="data_solnodes.cpp" />
-    <ClCompile Include="data_recipes.cpp" />
+    <ClCompile Include="data_solnodes.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="data_codenames.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="data_recipes.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
       <UniqueIdentifier>{3bf8b1b7-cad1-43c7-9375-09fa9086e756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{33981c89-6995-438f-869e-1ee41f278527}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
