@@ -5,6 +5,8 @@
 #include <soup/time.hpp>
 
 #include "data.hpp"
+#include "DataCache.hpp"
+#include "DuviriTarot.hpp"
 #include "GeoIpService.hpp"
 #include "Inventory.hpp"
 #include "LogDevotee.hpp"
@@ -23,6 +25,8 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 	using namespace Sentinel;
 
 	println("main", "Welcome to Sentinel. First of all, I'm going to catch up with the most recent game session.");
+	DataCache::init();
+	DuviriTarot::readFromCache();
 	LogDevotee::process();
 	if (LogDevotee::isGameRunning())
 	{

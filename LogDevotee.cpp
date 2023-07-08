@@ -2,10 +2,10 @@
 
 #include <soup/string.hpp>
 
+#include "DuviriTarot.hpp"
 #include "Inventory.hpp"
 #include "mission.hpp"
 #include "Overlay.hpp"
-#include "solarmap.hpp"
 #include "squad.hpp"
 #include "stdout.hpp"
 
@@ -190,7 +190,14 @@ namespace Sentinel
 						item.category = (msg.at(msg.find(" Cave selection for category: ", i) + 30) - '0');
 						std::lock_guard lock(duviri_items_mtx);
 						duviri_items.emplace_back(std::move(item));
+					}
+					else if (msg == "MapRedux.lua: Found 0 overrides.\r\n")
+					{
+						// This should mean duviri_items are now finished generating.
 						Overlay::redraw();
+
+						// The game will only generate them once per mood, so Sentinel needs to remember in case the game is restarted.
+						DuviriTarot::writeToCache();
 					}
 				}
 				else if (msg.substr(0, 32) == "Starting new background region: ")

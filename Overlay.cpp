@@ -12,11 +12,11 @@
 #include <soup/Window.hpp>
 
 #include "data.hpp"
+#include "DuviriTarot.hpp"
 #include "GeoIpService.hpp"
 #include "LogDevotee.hpp"
 #include "mission.hpp"
 #include "ProcessWatcher.hpp"
-#include "solarmap.hpp"
 #include "squad.hpp"
 
 #define OCR_POC false
