@@ -5,6 +5,7 @@ Sentinel is an external helper and overlay for Warframe.
 ## Features
 
 Sentinel GUI:
+- Bounty Helper: Show if Narmer bounties are available and if you own the respective Caliban blueprint already
 - Invasions Helper: Shows rare invasion rewards and indicates if they're already owned.
 
 In-game overlay:
@@ -13,9 +14,6 @@ In-game overlay:
 - Duviri Tarot: Tells you what warframes and weapons you will be able to choose in the cave. This is basically the same as having rank 4 or higher of the Opportunity intrinsic.
 
 ## TODO
-
-Additions:
-- Bounty Helper: Show if Narmer bounties are available and if you own the respective Caliban blueprint already
 
 Improvements:
 - Duviri Tarot: Make it a toggle since the detection for if the Duviri navigation is opened is really unreliable

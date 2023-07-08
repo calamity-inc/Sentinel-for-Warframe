@@ -20,10 +20,77 @@
 static soup::Window w{};
 static std::time_t log_timeout = 0;
 
+using namespace Sentinel;
+
+static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int y, const std::string& type, int count)
+{
+	std::string text = soup::format("- {}x {}", count, codename_to_english(type));
+	const auto owned = Inventory::getOwnedCount(type);
+	const auto crafted = Inventory::getCraftedCount(type);
+	if (owned || crafted)
+	{
+		text.append(" (");
+		if (owned)
+		{
+			text.append(soup::format("{} owned", owned));
+		}
+		if (crafted)
+		{
+			if (owned)
+			{
+				text.append(", ");
+			}
+			text.append(soup::format("{} crafted", crafted));
+		}
+		text.push_back(')');
+	}
+	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
+}
+
+static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading, const std::vector<std::pair<std::string, int>>& items)
+{
+	if (!items.empty())
+	{
+		y += 10;
+		rt.drawText(x, y, heading, soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
+		y += 15;
+		for (const auto& item : items)
+		{
+			drawCountedItem(rt, x, y, item.first, item.second);
+			y += 10;
+		}
+	}
+}
+
+[[nodiscard]] static std::vector<std::pair<std::string, int>> getInterestingBountyRewardsFromSyndicate(const std::string& tag)
+{
+	std::vector<std::pair<std::string, int>> res{};
+	for (const auto& syndicate : WorldState::root->asObj().at("SyndicateMissions").asArr())
+	{
+		if (syndicate.asObj().at("Tag").asStr() == tag)
+		{
+			for (const auto& job : syndicate.asObj().at("Jobs").asArr())
+			{
+				if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableARewards")
+				{
+					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientSystemsBlueprint", 1);
+				}
+				else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards")
+				{
+					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientChassisBlueprint", 1);
+				}
+				else if (job.asObj().at("rewards").asStr() == "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableCRewards")
+				{
+					res.emplace_back("/Lotus/Types/Recipes/WarframeRecipes/SentientHelmetBlueprint", 1);
+				}
+			}
+		}
+	}
+	return res;
+}
+
 int entrypoint(std::vector<std::string>&& args, bool console)
 {
-	using namespace Sentinel;
-
 	println("main", "Welcome to Sentinel. First of all, I'm going to catch up with the most recent game session.");
 	DataCache::init();
 	DuviriTarot::readFromCache();
@@ -67,12 +134,12 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			rt.drawText(2, 32, "World state unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 
-		unsigned int y = 52;
+		unsigned int y = 52 - 10;
 
 		if (WorldState::root)
 		{
-			//rt.drawText(2, y, "BOUNTIES", soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
-			//y += 20;
+			drawItemsList(rt, 2, y, "CETUS BOUNTIES", getInterestingBountyRewardsFromSyndicate("CetusSyndicate"));
+			drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewardsFromSyndicate("SolarisSyndicate"));
 
 			std::vector<std::pair<std::string, int>> invasion_items{};
 			for (const auto& invasion : WorldState::root->asObj().at("Invasions").asArr())
@@ -117,36 +184,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					++i;
 				}
 			}
-			if (!invasion_items.empty())
-			{
-				rt.drawText(2, y, "INVASIONS", soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
-				y += 20;
-				for (const auto& item : invasion_items)
-				{
-					std::string text = soup::format("- {}x {}", item.second, codename_to_english(item.first));
-					const auto owned = Inventory::getOwnedCount(item.first);
-					const auto crafted = Inventory::getCraftedCount(item.first);
-					if (owned || crafted)
-					{
-						text.append(" (");
-						if (owned)
-						{
-							text.append(soup::format("{} owned", owned));
-						}
-						if (crafted)
-						{
-							if (owned)
-							{
-								text.append(", ");
-							}
-							text.append(soup::format("{} crafted", crafted));
-						}
-						text.push_back(')');
-					}
-					rt.drawText(2, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
-					y += 10;
-				}
-			}
+			drawItemsList(rt, 2, y, "INVASIONS", invasion_items);
 		}
 
 		WindowCommons::get(w).draw(rt, { 0x10, 0x10, 0x10 });
