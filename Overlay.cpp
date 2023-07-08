@@ -58,6 +58,7 @@ namespace Sentinel
 			auto size = ProcessWatcher::getWindowSize();
 
 			w = soup::Window::create("Sentinel Overlay", size.first, size.second);
+			w.hideFromTaskbar();
 			w.setPos(pos.first, pos.second);
 			w.setInvisibleColour(Rgb::BLACK);
 			w.setTopmost(true);
