@@ -130,7 +130,36 @@ namespace Sentinel
 				return item.asObj().at("ItemCount").asInt();
 			}
 		}
-		return 0;
+		int count = 0;
+		for (const auto& item : root->asObj().at("LongGuns").asArr())
+		{
+			if (item.asObj().at("ItemType").asStr() == type)
+			{
+				++count;
+			}
+		}
+		for (const auto& item : root->asObj().at("Melee").asArr())
+		{
+			if (item.asObj().at("ItemType").asStr() == type)
+			{
+				++count;
+			}
+		}
+		for (const auto& item : root->asObj().at("Pistols").asArr())
+		{
+			if (item.asObj().at("ItemType").asStr() == type)
+			{
+				++count;
+			}
+		}
+		for (const auto& item : root->asObj().at("Suits").asArr())
+		{
+			if (item.asObj().at("ItemType").asStr() == type)
+			{
+				++count;
+			}
+		}
+		return count;
 	}
 
 	bool Inventory::getCraftedCount(const std::string& type)
