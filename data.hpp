@@ -5,6 +5,7 @@
 
 extern std::unordered_map<std::string, std::string> codename_to_english_map;
 extern std::unordered_map<std::string, std::string> recipe_to_result_map;
+extern std::unordered_map<std::string, std::string> unique_ingredients_to_recipe_map;
 extern std::unordered_map<std::string, std::string> solnodes;
 
 [[nodiscard]] inline std::string codename_to_english(const std::string& codename)

@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="DataCache.cpp" />
     <ClCompile Include="data_codenames.cpp" />
+    <ClCompile Include="data_ingredients.cpp" />
     <ClCompile Include="DuviriTarot.cpp" />
     <ClCompile Include="GeoIpService.cpp" />
     <ClCompile Include="Inventory.cpp" />

@@ -39,6 +39,9 @@
     </ClCompile>
     <ClCompile Include="DataCache.cpp" />
     <ClCompile Include="DuviriTarot.cpp" />
+    <ClCompile Include="data_ingredients.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
