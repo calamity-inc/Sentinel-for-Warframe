@@ -25,8 +25,8 @@ using namespace Sentinel;
 static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int y, const std::string& type, int count)
 {
 	std::string text = soup::format("- {}x {}", count, codename_to_english(type));
-	const auto owned = Inventory::getOwnedCount(type);
-	const auto crafted = Inventory::getCraftedCount(type);
+	auto owned = Inventory::getOwnedCount(type);
+	auto crafted = Inventory::getCraftedCount(type);
 	if (owned || crafted)
 	{
 		text.append(" (");
@@ -43,6 +43,24 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 			text.append(soup::format("{} crafted", crafted));
 		}
 		text.push_back(')');
+	}
+	else
+	{
+		if (auto e = unique_ingredients_to_recipe_map.find(type); e != unique_ingredients_to_recipe_map.end())
+		{
+			if (e = recipe_to_result_map.find(e->second); e != recipe_to_result_map.end())
+			{
+				owned = Inventory::getOwnedCount(e->second);
+				if (owned)
+				{
+					text.append(" (");
+					text.append(std::to_string(owned));
+					text.append("x ");
+					text.append(codename_to_english(e->second));
+					text.append(" owned)");
+				}
+			}
+		}
 	}
 	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
 }
