@@ -139,14 +139,22 @@ namespace Sentinel
 				{
 					current_missionType.clear();
 					current_missionType += msg.substr(29, msg.size() - 29 - 2);
-					mainWindowRedraw();
 					mission_stage = 0;
+					mainWindowRedraw();
+					if (amHost())
+					{
+						Overlay::redraw();
+					}
 					std::cout << "[LogDevotee] Starting " << current_missionType << " mission\n";
 				}
 				else if (msg.substr(0, 28) == "EOM missionLocationUnlocked=")
 				{
 					current_missionType.clear();
 					mainWindowRedraw();
+					if (amHost())
+					{
+						Overlay::redraw();
+					}
 					std::cout << "[LogDevotee] Mission over\n";
 				}
 				else if (msg.substr(0, 25) == "Rescue.lua: Hostage cell=")

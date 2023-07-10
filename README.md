@@ -13,12 +13,6 @@ In-game overlay:
 - Rescue Helper: Tells you which cell the hostage is in if you're the host.
 - Duviri Tarot: Tells you what warframes and weapons you will be able to choose in the cave. This is basically the same as having rank 4 or higher of the Opportunity intrinsic.
 
-## TODO
-
-Improvements:
-- Rescue Helper: Show cell name so you don't need to cross-reference the code comment
-- Rescue Helper: Give more time for end-user to screenshot/write down cell name after hostage was found (in an unknown cell)
-
 ## A note on inventory data
 
 Currently, Sentinel's only way to read your inventory data is by reading [AlecaFrame](https://www.alecaframe.com/)'s cached data, so you need to have it installed.
