@@ -162,6 +162,11 @@ namespace Sentinel
 				else if (msg.substr(0, 25) == "Rescue.lua: Hostage cell=")
 				{
 					hostage_cell = (msg.at(25) - '0');
+					if (!amHost())
+					{
+						std::cout << "[LogDevotee] We're starting a mission as the host, but " << host_name << " should be the host?!\n";
+						host_name = local_name;
+					}
 					std::cout << "[LogDevotee] Rescue target is in cell " << hostage_cell << "\n";
 				}
 				else if (msg == "HudRedux.lua: Queuing new transmission: RescueEnterObjectiveRoomTransmission\r\n")
