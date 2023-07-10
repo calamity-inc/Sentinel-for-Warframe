@@ -150,6 +150,10 @@ namespace Sentinel
 						{
 							trivia.emplace_back("Host");
 						}
+						if (auto p = member.getPlatform(); p != WINDOWS)
+						{
+							trivia.emplace_back(platformToString(p));
+						}
 						if (!member.ip.empty())
 						{
 							if (GeoIpService::available)
