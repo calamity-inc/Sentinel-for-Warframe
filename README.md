@@ -4,11 +4,10 @@ Sentinel is an external helper and overlay for Warframe.
 
 ## Features
 
-Sentinel GUI:
 - Bounty Helper: Shows the current Narmer bounty's blueprint rewards and if you own them already.
 - Invasions Helper: Shows rare invasion rewards and indicates if they're already owned.
 
-In-game overlay:
+While in-game only:
 - Squad Overlay: Shows additional info about your squad members (Is host, IP-based location, ISP, is using VPN)
 - Rescue Helper: Tells you which cell the hostage is in if you're the host.
 - Duviri Tarot: Tells you what warframes and weapons you will be able to choose in the cave. This is basically the same as having rank 4 or higher of the Opportunity intrinsic.
