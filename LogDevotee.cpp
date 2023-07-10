@@ -4,6 +4,7 @@
 
 #include "DuviriTarot.hpp"
 #include "Inventory.hpp"
+#include "main.hpp"
 #include "mission.hpp"
 #include "Overlay.hpp"
 #include "squad.hpp"
@@ -138,12 +139,14 @@ namespace Sentinel
 				{
 					current_missionType.clear();
 					current_missionType += msg.substr(29, msg.size() - 29 - 2);
+					mainWindowRedraw();
 					mission_stage = 0;
 					std::cout << "[LogDevotee] Starting " << current_missionType << " mission\n";
 				}
 				else if (msg.substr(0, 28) == "EOM missionLocationUnlocked=")
 				{
 					current_missionType.clear();
+					mainWindowRedraw();
 					std::cout << "[LogDevotee] Mission over\n";
 				}
 				else if (msg.substr(0, 25) == "Rescue.lua: Hostage cell=")
@@ -199,17 +202,11 @@ namespace Sentinel
 					else if (msg == "MapRedux.lua: Found 0 overrides.\r\n")
 					{
 						// This should mean duviri_items are now finished generating.
-						Overlay::redraw();
+						mainWindowRedraw();
 
 						// The game will only generate them once per mood, so Sentinel needs to remember in case the game is restarted.
 						DuviriTarot::writeToCache();
 					}
-				}
-				else if (msg.substr(0, 32) == "Starting new background region: ")
-				{
-					background_region.clear();
-					background_region += msg.substr(32, msg.size() - 32 - 2);
-					Overlay::redraw();
 				}
 				else if (msg.substr(0, 32) == "OnInventoryResults completed in ")
 				{

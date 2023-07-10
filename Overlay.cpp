@@ -12,7 +12,6 @@
 #include <soup/Window.hpp>
 
 #include "data.hpp"
-#include "DuviriTarot.hpp"
 #include "GeoIpService.hpp"
 #include "LogDevotee.hpp"
 #include "mission.hpp"
@@ -183,44 +182,6 @@ namespace Sentinel
 				{
 					rt.drawCentredText(x, y, soup::format("{}, cell {}", current_levelOverride, hostage_cell), RasterFont::simple8(), Rgb::WHITE, text_scale);
 					y += 40;
-				}
-				if (background_region == "/Lotus/Levels/Hub/SolarMapDuviri.level")
-				{
-					rt.drawCentredText(x, y, "Your cave options in Duviri will be as follows:", RasterFont::simple8(), Rgb::WHITE, text_scale);
-					y += 40;
-					std::lock_guard lock(duviri_items_mtx);
-					for (const auto& item : duviri_items)
-					{
-						if (item.category == IC_POWERSUIT)
-						{
-							rt.drawCentredText(x, y, soup::format("Warframe: {}", codename_to_english(item.codename)), RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-						}
-					}
-					for (const auto& item : duviri_items)
-					{
-						if (item.category == IC_PRIMARY)
-						{
-							rt.drawCentredText(x, y, soup::format("Primary Weapon: {}", codename_to_english(item.codename)), RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-						}
-					}
-					for (const auto& item : duviri_items)
-					{
-						if (item.category == IC_SECONDARY)
-						{
-							rt.drawCentredText(x, y, soup::format("Secondary Weapon: {}", codename_to_english(item.codename)), RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-						}
-					}
-					for (const auto& item : duviri_items)
-					{
-						if (item.category == IC_MELEE)
-						{
-							rt.drawCentredText(x, y, soup::format("Melee Weapon: {}", codename_to_english(item.codename)), RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-						}
-					}
 				}
 			});
 			w.setMouseInformer([](soup::Window w, unsigned int x, unsigned int y) -> soup::Window::on_click_t

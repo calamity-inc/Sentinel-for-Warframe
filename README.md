@@ -16,7 +16,6 @@ In-game overlay:
 ## TODO
 
 Improvements:
-- Duviri Tarot: Make it a toggle since the detection for if the Duviri navigation is opened is really unreliable
 - Rescue Helper: Show cell name so you don't need to cross-reference the code comment
 - Rescue Helper: Give more time for end-user to screenshot/write down cell name after hostage was found (in an unknown cell)
 

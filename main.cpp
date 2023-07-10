@@ -10,6 +10,7 @@
 #include "GeoIpService.hpp"
 #include "Inventory.hpp"
 #include "LogDevotee.hpp"
+#include "mission.hpp"
 #include "Overlay.hpp"
 #include "ProcessWatcher.hpp"
 #include "squad.hpp" // local_name
@@ -65,13 +66,18 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
 }
 
+static void drawHeading(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading)
+{
+	y += 10;
+	rt.drawText(x, y, heading, soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
+	y += 15;
+}
+
 static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading, const std::vector<std::pair<std::string, int>>& items)
 {
 	if (!items.empty())
 	{
-		y += 10;
-		rt.drawText(x, y, heading, soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
-		y += 15;
+		drawHeading(rt, x, y, heading);
 		for (const auto& item : items)
 		{
 			drawCountedItem(rt, x, y, item.first, item.second);
@@ -140,7 +146,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 	WorldState::download();
 
-	w = soup::Window::create("Sentinel", 400, 200, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
+	w = soup::Window::create("Sentinel", 400, 320, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
 	WindowCommons::init(w);
 	w.setDrawFunc([](soup::Window w, soup::RenderTarget& rt)
 	{
@@ -225,6 +231,46 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 				}
 			}
 			drawItemsList(rt, 2, y, "INVASIONS", invasion_items);
+		}
+
+		if (LogDevotee::isGameRunning()
+			&& current_missionType.empty()
+			)
+		{
+			drawHeading(rt, 2, y, "DUVIRI OPTIONS");
+			std::lock_guard lock(duviri_items_mtx);
+			for (const auto& item : duviri_items)
+			{
+				if (item.category == IC_POWERSUIT)
+				{
+					rt.drawText(2, y, soup::format("- Warframe: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					y += 10;
+				}
+			}
+			for (const auto& item : duviri_items)
+			{
+				if (item.category == IC_PRIMARY)
+				{
+					rt.drawText(2, y, soup::format("- Primary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					y += 10;
+				}
+			}
+			for (const auto& item : duviri_items)
+			{
+				if (item.category == IC_SECONDARY)
+				{
+					rt.drawText(2, y, soup::format("- Secondary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					y += 10;
+				}
+			}
+			for (const auto& item : duviri_items)
+			{
+				if (item.category == IC_MELEE)
+				{
+					rt.drawText(2, y, soup::format("- Melee Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					y += 10;
+				}
+			}
 		}
 
 		WindowCommons::get(w).draw(rt, { 0x10, 0x10, 0x10 });

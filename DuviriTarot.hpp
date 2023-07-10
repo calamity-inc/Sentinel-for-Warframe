@@ -18,7 +18,6 @@ struct Item
 	int category;
 };
 
-inline std::string background_region;
 inline std::recursive_mutex duviri_items_mtx{};
 inline std::vector<Item> duviri_items{};
 
