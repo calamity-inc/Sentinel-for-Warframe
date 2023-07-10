@@ -116,6 +116,10 @@ namespace Sentinel
 
 	int Inventory::getOwnedCount(const std::string& type)
 	{
+		if (root == nullptr)
+		{
+			return 0;
+		}
 		for (const auto& item : root->asObj().at("MiscItems").asArr())
 		{
 			if (item.asObj().at("ItemType").asStr() == type)
