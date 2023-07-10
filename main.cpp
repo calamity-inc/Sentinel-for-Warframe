@@ -284,6 +284,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 		return nullptr;
 	});
 	
+	ProcessWatcher::init();
 	std::thread t([]
 	{
 		while (w)

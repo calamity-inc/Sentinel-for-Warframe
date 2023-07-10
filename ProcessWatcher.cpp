@@ -9,6 +9,16 @@ namespace Sentinel
     static soup::UniquePtr<soup::Process> game_process{};
     static bool game_process_is_game = false;
 
+    void ProcessWatcher::init()
+    {
+        // If we're just starting up and Warframe.x64.exe is running, just assume it is, in fact, the game.
+        SOUP_UNUSED(isGameRunning());
+        if (game_process)
+        {
+            game_process_is_game = true;
+        }
+    }
+
     bool ProcessWatcher::isGameRunning()
     {
         if (!game_process)
