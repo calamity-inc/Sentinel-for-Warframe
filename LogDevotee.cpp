@@ -130,7 +130,9 @@ namespace Sentinel
 					host_name += msg.substr(37);
 					host_name.erase(host_name.size() - 5); // platform indicator + "\r\n"
 				}
-				else if (msg.substr(0, 29) == "HOST MIGRATION: local client ") // ... selected as the new host
+				else if (msg.substr(0, 29) == "HOST MIGRATION: local client " // ... selected as the new host
+					|| msg == "Host migration: local client selected as the new host\r\n"
+					)
 				{
 					host_name = local_name;
 					Overlay::redraw();
