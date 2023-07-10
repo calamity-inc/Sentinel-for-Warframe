@@ -353,8 +353,9 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 	w.runMessageLoop();
 	w.reset();
 
-	t.join();
 	Overlay::deinit();
+
+	t.join();
 
 	if (GeoIpService::busy)
 	{
