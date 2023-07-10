@@ -141,6 +141,11 @@ namespace Sentinel
 					mission_stage = 0;
 					std::cout << "[LogDevotee] Starting " << current_missionType << " mission\n";
 				}
+				else if (msg.substr(0, 28) == "EOM missionLocationUnlocked=")
+				{
+					current_missionType.clear();
+					std::cout << "[LogDevotee] Mission over\n";
+				}
 				else if (msg.substr(0, 25) == "Rescue.lua: Hostage cell=")
 				{
 					hostage_cell = (msg.at(25) - '0');
