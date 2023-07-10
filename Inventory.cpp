@@ -4,7 +4,6 @@
 
 #include <soup/aes.hpp>
 #include <soup/format.hpp>
-#include <soup/joaat.hpp>
 #include <soup/string.hpp>
 #include <soup/time.hpp>
 
