@@ -137,6 +137,12 @@ namespace Sentinel
 					host_name = local_name;
 					Overlay::redraw();
 				}
+				else if (msg.substr(0, 54) == "HOST MIGRATION: local client trying to join new host: ")
+				{
+					host_name.clear();
+					host_name += msg.substr(54);
+					host_name.erase(host_name.size() - 5); // platform indicator + "\r\n"
+				}
 				else if (msg.substr(0, 29) == "OnStateStarted, mission type=")
 				{
 					current_missionType.clear();
