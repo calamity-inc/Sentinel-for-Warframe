@@ -11,7 +11,11 @@
 #include "main.hpp"
 #include "stdout.hpp"
 
+#ifdef _DEBUG
+#define WRITE_JSON_ON_READ true
+#else
 #define WRITE_JSON_ON_READ false
+#endif
 
 #if WRITE_JSON_ON_READ
 #include <soup/FileWriter.hpp>
