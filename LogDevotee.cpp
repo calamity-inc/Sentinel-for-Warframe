@@ -26,6 +26,22 @@ namespace Sentinel
 		}
 	}
 
+	// Variant of fgets that only succeeds if the line is terminated with '\n' to avoid reading incomplete lines.
+	[[nodiscard]] static char* fgets_complete(char* buffer, int size, FILE* file)
+	{
+		long initial_position = ftell(file);
+		if (fgets(buffer, size, file) == NULL)
+		{
+			return NULL;
+		}
+		if (strchr(buffer, '\n') == NULL)
+		{
+			fseek(file, initial_position, SEEK_SET);
+			return NULL;
+		}
+		return buffer;
+	}
+
 	void LogDevotee::process()
 	{
 		using namespace soup;
@@ -42,7 +58,7 @@ namespace Sentinel
 		}
 		char buf[4096];
 		output_mutex.lock();
-		while (fgets(buf, sizeof(buf), f) != nullptr)
+		while (fgets_complete(buf, sizeof(buf), f) != nullptr)
 		{
 			std::string_view sv(buf);
 			if (auto i = sv.find("]: "); i != std::string::npos)
