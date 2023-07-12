@@ -152,24 +152,26 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 	{
 		rt.fill({ 0x10, 0x10, 0x10 });
 
-		rt.drawText(2, 2, soup::format("Welcome to Sentinel, {}!", local_name.empty() ? "Tenno" : local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
+		const unsigned int x = 2;
+
+		rt.drawText(x, 2, soup::format("Welcome to Sentinel, {}!", local_name.empty() ? "Tenno" : local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
 
 		if (Inventory::data_as_of)
 		{
-			rt.drawText(2, 22, soup::format("Inventory data as of {}", soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 22, soup::format("Inventory data as of {}", soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 		else
 		{
-			rt.drawText(2, 22, "Inventory data unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 22, "Inventory data unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 
 		if (WorldState::data_as_of)
 		{
-			rt.drawText(2, 32, soup::format("World state as of {}", soup::time::datetimeLocal(WorldState::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 32, soup::format("World state as of {}", soup::time::datetimeLocal(WorldState::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 		else
 		{
-			rt.drawText(2, 32, "World state unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 32, "World state unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 
 		unsigned int y = 52 - 10;
@@ -180,11 +182,11 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			// If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are available on fortuna, instead.
 			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60)
 			{
-				drawItemsList(rt, 2, y, "CETUS BOUNTIES", getInterestingBountyRewards(cetus_syndicate));
+				drawItemsList(rt, x, y, "CETUS BOUNTIES", getInterestingBountyRewards(cetus_syndicate));
 			}
 			else
 			{
-				drawItemsList(rt, 2, y, "FORTUNA BOUNTIES", getInterestingBountyRewards(getSyndicate("SolarisSyndicate")));
+				drawItemsList(rt, x, y, "FORTUNA BOUNTIES", getInterestingBountyRewards(getSyndicate("SolarisSyndicate")));
 			}
 
 			std::vector<std::pair<std::string, int>> invasion_items{};
@@ -230,20 +232,20 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					++i;
 				}
 			}
-			drawItemsList(rt, 2, y, "INVASIONS", invasion_items);
+			drawItemsList(rt, x, y, "INVASIONS", invasion_items);
 		}
 
 		if (LogDevotee::isGameRunning()
 			&& current_missionType.empty()
 			)
 		{
-			drawHeading(rt, 2, y, "DUVIRI OPTIONS");
+			drawHeading(rt, x, y, "DUVIRI OPTIONS");
 			std::lock_guard lock(duviri_items_mtx);
 			for (const auto& item : duviri_items)
 			{
 				if (item.category == IC_POWERSUIT)
 				{
-					rt.drawText(2, y, soup::format("- Warframe: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					rt.drawText(x, y, soup::format("- Warframe: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
 					y += 10;
 				}
 			}
@@ -251,7 +253,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			{
 				if (item.category == IC_PRIMARY)
 				{
-					rt.drawText(2, y, soup::format("- Primary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					rt.drawText(x, y, soup::format("- Primary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
 					y += 10;
 				}
 			}
@@ -259,7 +261,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			{
 				if (item.category == IC_SECONDARY)
 				{
-					rt.drawText(2, y, soup::format("- Secondary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					rt.drawText(x, y, soup::format("- Secondary Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
 					y += 10;
 				}
 			}
@@ -267,7 +269,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			{
 				if (item.category == IC_MELEE)
 				{
-					rt.drawText(2, y, soup::format("- Melee Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
+					rt.drawText(x, y, soup::format("- Melee Weapon: {}", codename_to_english(item.codename)), soup::RasterFont::simple8(), soup::Rgb::WHITE, 1);
 					y += 10;
 				}
 			}
