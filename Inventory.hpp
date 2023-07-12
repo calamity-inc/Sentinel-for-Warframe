@@ -44,5 +44,8 @@ namespace Sentinel
 		[[nodiscard]] static bool getCraftedCount(const std::string& type);
 		[[nodiscard]] static int getItemXp(const std::string& type);
 		[[nodiscard]] static int isItemMastered(const std::string& type);
+
+		[[nodiscard]] static bool hasCompletedLatestSortie(const std::string& oid);
+		[[nodiscard]] static bool hasCompletedLatestArchonHunt(const std::string& oid);
 	};
 }

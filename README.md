@@ -4,6 +4,7 @@ Sentinel is an external helper and overlay for Warframe.
 
 ## Features
 
+- Periodic Missions: Shows if the current Sortie and Archon Hunt have been completed yet. (Won't show if inventory data is unavailable.)
 - Bounty Helper: Shows the current Narmer bounty's blueprint rewards and if you own them already.
 - Invasions Helper: Shows rare invasion rewards and indicates if they're already owned.
 

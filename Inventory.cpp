@@ -197,4 +197,34 @@ namespace Sentinel
 	{
 		return getItemXp(type) >= 450'000; // 450.000 XP would be rank 30 for a weapon, so we're making a few assumptions here.
 	}
+
+	bool Inventory::hasCompletedLatestSortie(const std::string& oid)
+	{
+		if (root != nullptr)
+		{
+			for (const auto& mission : root->asObj().at("LastSortieReward").asArr())
+			{
+				if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	bool Inventory::hasCompletedLatestArchonHunt(const std::string& oid)
+	{
+		if (root != nullptr)
+		{
+			for (const auto& mission : root->asObj().at("LastLiteSortieReward").asArr())
+			{
+				if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

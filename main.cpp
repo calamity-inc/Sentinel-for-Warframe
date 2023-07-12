@@ -206,6 +206,37 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 		if (WorldState::root)
 		{
+			if (Inventory::isLoaded())
+			{
+				drawHeading(rt, x, y, "PERIODIC MISSIONS");
+				for (const auto& mission : WorldState::root->asObj().at("Sorties").asArr())
+				{
+					bool completed = Inventory::hasCompletedLatestSortie(mission.asObj().at("_id").asObj().at("$oid").asStr());
+					if (completed)
+					{
+						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+					}
+					else
+					{
+						rt.drawText(x, y, "- Sortie", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+					}
+					y += 10;
+				}
+				for (const auto& mission : WorldState::root->asObj().at("LiteSorties").asArr())
+				{
+					bool completed = Inventory::hasCompletedLatestArchonHunt(mission.asObj().at("_id").asObj().at("$oid").asStr());
+					if (completed)
+					{
+						rt.drawText(x, y, "- Archon Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+					}
+					else
+					{
+						rt.drawText(x, y, "- Archon Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+					}
+					y += 10;
+				}
+			}
+
 			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
 			// If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are available on fortuna, instead.
 			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60)
