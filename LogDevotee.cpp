@@ -70,6 +70,7 @@ namespace Sentinel
 					name += msg.substr(10);
 					name.erase(name.find(' '));
 					local_name = std::move(name);
+					host_name = local_name;
 					std::cout << "[LogDevotee] Hello there, " << local_name << "!\n";
 					// could also get account id from this if we needed it
 				}
