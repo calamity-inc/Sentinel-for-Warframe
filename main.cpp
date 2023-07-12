@@ -174,7 +174,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 	WorldState::download();
 
-	w = soup::Window::create("Sentinel", 400, 320, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
+	w = soup::Window::create("Sentinel for Warframe", 320, 320, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
 	WindowCommons::init(w);
 	w.setDrawFunc([](soup::Window w, soup::RenderTarget& rt)
 	{
@@ -182,11 +182,11 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 		const unsigned int x = 2;
 
-		rt.drawText(x, 2, soup::format("Welcome to Sentinel, {}!", local_name.empty() ? "Tenno" : local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
+		rt.drawText(x, 2, "Sentinel for Warframe", soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
 
 		if (Inventory::data_as_of)
 		{
-			rt.drawText(x, 22, soup::format("Inventory data as of {}", soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 22, soup::format("Inventory data for {} as of {}", local_name, soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 		else
 		{
