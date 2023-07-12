@@ -7,8 +7,7 @@
 // For windows clients, the username is suffixed with U+E000 ().
 // Clients of other platforms have the U+2068 () suffix.
 
-// The mm value of playstation clients has been confirmed via chat.
-// Xbox and Switch may be the other way around, but guessing Xbox is more popular.
+// The mm value of PlayStation & Xbox clients has been confirmed via chat.
 
 // IP address & port are only available for Windows clients because there's no cross-platform VOIP.
 
@@ -16,9 +15,9 @@ enum Platform
 {
 	WINDOWS, // mm value looks like this: "AB0D55C3C7B9CD00F768C265"
 	PLAYSTATION, // mm value is their username (without the U+2068 suffix)
-	XBOX,   // mm value looks like this: "S]F;JEV7B5';K%&           @8P(7=P-'- $          "
+	XBOX,   // mm value looks like this: "2535409713692376"
+	SWITCH, // mm value looks like this: "S]F;JEV7B5';K%&           @8P(7=P-'- $          "
 	        //                           "OQ69SE78EQF9              08X(7=P-'- $          "
-	SWITCH, // mm value looks like this: "2535409713692376"
 };
 
 [[nodiscard]] inline const char* platformToString(Platform p)
@@ -61,7 +60,7 @@ struct SquadMember
 		{
 			return PLAYSTATION;
 		}
-		if (mm.size() > 32)
+		if (mm.size() < 32)
 		{
 			return XBOX;
 		}
