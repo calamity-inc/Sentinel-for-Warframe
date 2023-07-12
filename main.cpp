@@ -190,7 +190,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 		}
 		else
 		{
-			rt.drawText(x, 22, "Inventory data unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, 22, soup::format("Inventory data for {} unavailable", local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE);
 		}
 
 		if (WorldState::data_as_of)
