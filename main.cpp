@@ -24,6 +24,13 @@ static std::time_t log_timeout = 0;
 
 using namespace Sentinel;
 
+static constexpr uint8_t HEADING_SCALE = 2;
+static constexpr unsigned int HEADING_PADDING_TOP = 10;
+static constexpr unsigned int HEADING_PADDING_BOTTOM = 5;
+
+static constexpr uint8_t TEXT_SCALE = 1;
+static constexpr unsigned int TEXT_PADDING_BOTTOM = 2;
+
 static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int y, const std::string& type, int count)
 {
 	std::string text = soup::format("- {}x {}", count, codename_to_english(type));
@@ -92,14 +99,14 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 			}
 		}
 	}
-	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted || mastered ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
+	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted || mastered ? soup::Rgb::GRAY : soup::Rgb::WHITE, TEXT_SCALE);
 }
 
 static void drawHeading(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading)
 {
-	y += 10;
-	rt.drawText(x, y, heading, soup::RasterFont::simple5(), soup::Rgb::WHITE, 2);
-	y += 15;
+	y += HEADING_PADDING_TOP;
+	rt.drawText(x, y, heading, soup::RasterFont::simple5(), soup::Rgb::WHITE, HEADING_SCALE);
+	y += (HEADING_SCALE * 5) + HEADING_PADDING_BOTTOM;
 }
 
 static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading, const std::vector<std::pair<std::string, int>>& items)
@@ -110,7 +117,7 @@ static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& 
 		for (const auto& item : items)
 		{
 			drawCountedItem(rt, x, y, item.first, item.second);
-			y += 10;
+			y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 		}
 	}
 }
@@ -176,29 +183,31 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 	{
 		rt.fill({ 0x10, 0x10, 0x10 });
 
-		const unsigned int x = 2;
+		const unsigned int x = 4;
+		unsigned int y = 4;
 
-		rt.drawText(x, 2, "Sentinel for Warframe", soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
+		rt.drawText(x, y, "Sentinel for Warframe", soup::RasterFont::simple8(), soup::Rgb::WHITE, 2);
+		y += (2 * 8) + 4;
 
 		if (Inventory::data_as_of)
 		{
-			rt.drawText(x, 22, soup::format("Inventory data for {} as of {}", local_name, soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, y, soup::format("Inventory data for {} as of {}", local_name, soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
 		else
 		{
-			rt.drawText(x, 22, soup::format("Inventory data for {} unavailable", local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, y, soup::format("Inventory data for {} unavailable", local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
+		y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 
 		if (WorldState::data_as_of)
 		{
-			rt.drawText(x, 32, soup::format("World state as of {}", soup::time::datetimeLocal(WorldState::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, y, soup::format("World state as of {}", soup::time::datetimeLocal(WorldState::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
 		else
 		{
-			rt.drawText(x, 32, "World state unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+			rt.drawText(x, y, "World state unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
-
-		unsigned int y = 52 - 10;
+		y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 
 		if (WorldState::root)
 		{
@@ -211,13 +220,13 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					bool completed = Inventory::hasCompletedLatestSortie(mission.asObj().at("_id").asObj().at("$oid").asStr());
 					if (completed)
 					{
-						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
 					}
 					else
 					{
-						rt.drawText(x, y, "- Sortie", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+						rt.drawText(x, y, "- Sortie", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 					}
-					y += 10;
+					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 				}
 
 				time_t week_began_at = 0;
@@ -227,24 +236,24 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					bool completed = Inventory::hasCompletedLatestArchonHunt(mission.asObj().at("_id").asObj().at("$oid").asStr());
 					if (completed)
 					{
-						rt.drawText(x, y, "- Archon Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+						rt.drawText(x, y, "- Archon Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
 					}
 					else
 					{
-						rt.drawText(x, y, "- Archon Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+						rt.drawText(x, y, "- Archon Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 					}
-					y += 10;
+					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 				}
 
 				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
 				{
-					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
 				}
 				else
 				{
-					rt.drawText(x, y, "- Ayatan Treasure Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+					rt.drawText(x, y, "- Ayatan Treasure Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 				}
-				y += 10;
+				y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 			}
 
 			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
