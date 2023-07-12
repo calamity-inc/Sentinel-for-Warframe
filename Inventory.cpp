@@ -64,6 +64,8 @@ namespace Sentinel
 
 	void Inventory::load()
 	{
+		std::lock_guard lock(mtx);
+
 		{
 			std::wstring path = _wgetenv(L"localappdata");
 			path.append(L"\\AlecaFrame\\lastData.dat");
@@ -120,6 +122,7 @@ namespace Sentinel
 
 	int Inventory::getOwnedCount(const std::string& type)
 	{
+		std::lock_guard lock(mtx);
 		if (root == nullptr)
 		{
 			return 0;
@@ -181,6 +184,7 @@ namespace Sentinel
 
 	int Inventory::getItemXp(const std::string& type)
 	{
+		std::lock_guard lock(mtx);
 		if (root != nullptr)
 		{
 			for (const auto& item : root->asObj().at("XPInfo").asArr())
@@ -201,6 +205,7 @@ namespace Sentinel
 
 	bool Inventory::hasCompletedLatestSortie(const std::string& oid)
 	{
+		std::lock_guard lock(mtx);
 		if (root != nullptr)
 		{
 			for (const auto& mission : root->asObj().at("LastSortieReward").asArr())
@@ -216,6 +221,7 @@ namespace Sentinel
 
 	bool Inventory::hasCompletedLatestArchonHunt(const std::string& oid)
 	{
+		std::lock_guard lock(mtx);
 		if (root != nullptr)
 		{
 			for (const auto& mission : root->asObj().at("LastLiteSortieReward").asArr())
@@ -231,6 +237,7 @@ namespace Sentinel
 
 	time_t Inventory::getLastAyatanTreasureHuntCompletion()
 	{
+		std::lock_guard lock(mtx);
 		time_t latest = 0;
 		if (root != nullptr)
 		{

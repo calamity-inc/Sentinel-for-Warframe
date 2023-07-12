@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mutex>
+
 #include <soup/json.hpp>
 
 namespace Sentinel
@@ -31,6 +33,7 @@ namespace Sentinel
 	struct Inventory
 	{
 		inline static time_t data_as_of = 0;
+		inline static std::mutex mtx;
 		inline static soup::UniquePtr<soup::JsonNode> root;
 		
 		[[nodiscard]] static bool isLoaded() noexcept
