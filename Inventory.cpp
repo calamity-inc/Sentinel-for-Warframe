@@ -8,6 +8,7 @@
 #include <soup/time.hpp>
 
 #include "data.hpp"
+#include "JsonHelper.hpp"
 #include "main.hpp"
 #include "stdout.hpp"
 
@@ -226,5 +227,25 @@ namespace Sentinel
 			}
 		}
 		return false;
+	}
+
+	time_t Inventory::getLastAyatanTreasureHuntCompletion()
+	{
+		time_t latest = 0;
+		if (root != nullptr)
+		{
+			for (const auto& mission : root->asObj().at("PeriodicMissionCompletions").asArr())
+			{
+				if (mission.asObj().at("tag").asStr().value.substr(0, 12) == "TreasureHunt")
+				{
+					time_t date = JsonHelper::readDate(mission.asObj().at("date"));
+					if (date > latest)
+					{
+						latest = date;
+					}
+				}
+			}
+		}
+		return latest;
 	}
 }

@@ -47,5 +47,6 @@ namespace Sentinel
 
 		[[nodiscard]] static bool hasCompletedLatestSortie(const std::string& oid);
 		[[nodiscard]] static bool hasCompletedLatestArchonHunt(const std::string& oid);
+		[[nodiscard]] static time_t getLastAyatanTreasureHuntCompletion(); // seems to be start of the respective week, not the exact time of completion.
 	};
 }

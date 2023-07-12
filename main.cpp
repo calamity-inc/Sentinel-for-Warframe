@@ -205,6 +205,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			if (Inventory::isLoaded())
 			{
 				drawHeading(rt, x, y, "PERIODIC MISSIONS");
+
 				for (const auto& mission : WorldState::root->asObj().at("Sorties").asArr())
 				{
 					bool completed = Inventory::hasCompletedLatestSortie(mission.asObj().at("_id").asObj().at("$oid").asStr());
@@ -218,8 +219,11 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					}
 					y += 10;
 				}
+
+				time_t week_began_at = 0;
 				for (const auto& mission : WorldState::root->asObj().at("LiteSorties").asArr())
 				{
+					week_began_at = JsonHelper::readDate(mission.asObj().at("Activation"));
 					bool completed = Inventory::hasCompletedLatestArchonHunt(mission.asObj().at("_id").asObj().at("$oid").asStr());
 					if (completed)
 					{
@@ -231,6 +235,16 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					}
 					y += 10;
 				}
+
+				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
+				{
+					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY);
+				}
+				else
+				{
+					rt.drawText(x, y, "- Ayatan Treasure Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE);
+				}
+				y += 10;
 			}
 
 			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
