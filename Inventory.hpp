@@ -42,5 +42,6 @@ namespace Sentinel
 
 		[[nodiscard]] static int getOwnedCount(const std::string& type);
 		[[nodiscard]] static bool getCraftedCount(const std::string& type);
+		[[nodiscard]] static int getItemXp(const std::string& type);
 	};
 }

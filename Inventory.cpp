@@ -177,4 +177,19 @@ namespace Sentinel
 		}
 		return 0;
 	}
+
+	int Inventory::getItemXp(const std::string& type)
+	{
+		if (root != nullptr)
+		{
+			for (const auto& item : root->asObj().at("XPInfo").asArr())
+			{
+				if (item.asObj().at("ItemType").asStr() == type)
+				{
+					return item.asObj().at("XP").asInt();
+				}
+			}
+		}
+		return 0;
+	}
 }
