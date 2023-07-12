@@ -26,9 +26,19 @@ using namespace Sentinel;
 static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int y, const std::string& type, int count)
 {
 	std::string text = soup::format("- {}x {}", count, codename_to_english(type));
-	auto owned = Inventory::getOwnedCount(type);
-	auto crafted = Inventory::getCraftedCount(type);
-	if (owned || crafted)
+	int owned = Inventory::getOwnedCount(type);
+	int crafted = 0;
+	bool mastered = false;
+	if (auto e = recipe_to_result_map.find(type); e != recipe_to_result_map.end())
+	{
+		crafted = Inventory::getOwnedCount(e->second);
+		mastered = Inventory::isItemMastered(e->second);
+	}
+	else
+	{
+		mastered = Inventory::isItemMastered(type);
+	}
+	if (owned || crafted || mastered)
 	{
 		text.append(" (");
 		if (owned)
@@ -42,6 +52,14 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 				text.append(", ");
 			}
 			text.append(soup::format("{} crafted", crafted));
+		}
+		if (mastered)
+		{
+			if (owned || crafted)
+			{
+				text.append(", ");
+			}
+			text.append("mastered");
 		}
 		text.push_back(')');
 	}
@@ -60,10 +78,20 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 					text.append(codename_to_english(e->second));
 					text.append(" owned)");
 				}
+				else
+				{
+					mastered = Inventory::isItemMastered(e->second);
+					if (mastered)
+					{
+						text.append(" (");
+						text.append(codename_to_english(e->second));
+						text.append(" mastered)");
+					}
+				}
 			}
 		}
 	}
-	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
+	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted || mastered ? soup::Rgb::GRAY : soup::Rgb::WHITE, 1);
 }
 
 static void drawHeading(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading)

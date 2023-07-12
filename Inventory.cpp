@@ -192,4 +192,9 @@ namespace Sentinel
 		}
 		return 0;
 	}
+
+	int Inventory::isItemMastered(const std::string& type)
+	{
+		return getItemXp(type) >= 450'000; // 450.000 XP would be rank 30 for a weapon, so we're making a few assumptions here.
+	}
 }
