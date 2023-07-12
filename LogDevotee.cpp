@@ -198,6 +198,7 @@ namespace Sentinel
 				}
 				else if (msg == "HudRedux.lua: Queuing new transmission: RescueEnterObjectiveRoomTransmission\r\n"
 					|| msg == "HudRedux.lua: Queuing new transmission: RescueMissionSearchCellsTransmission\r\n"
+					|| msg == "HudRedux.lua: Queuing new transmission: DRscInfApproachHold130LotusTransmission\r\n" // /Lotus/Levels/Proc/Infestation/InfestedCorpusShipRescue
 					|| msg == "HudRedux.lua: Queuing new transmission: DRscMnUseConsolesLotus\r\n" // /Lotus/Levels/Proc/Orokin/OrokinMoonRescue
 					)
 				{
@@ -213,6 +214,7 @@ namespace Sentinel
 					}
 				}
 				else if (msg == "HudRedux.lua: Queuing new transmission: ObjectiveFoundRescueTransmission\r\n"
+					|| msg == "HudRedux.lua: Queuing new transmission: DRscInfObjFnd090LotusTransmission\r\n" // /Lotus/Levels/Proc/Infestation/InfestedCorpusShipRescue
 					|| msg == "HudRedux.lua: Queuing new transmission: DRscMnAgentFoundLotus\r\n" // /Lotus/Levels/Proc/Orokin/OrokinMoonRescue
 					)
 				{
