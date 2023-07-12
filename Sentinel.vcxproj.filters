@@ -19,6 +19,7 @@
       <Filter>data</Filter>
     </ClInclude>
     <ClInclude Include="DataCache.hpp" />
+    <ClInclude Include="JsonHelper.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

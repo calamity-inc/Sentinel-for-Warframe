@@ -9,6 +9,7 @@
 #include "DuviriTarot.hpp"
 #include "GeoIpService.hpp"
 #include "Inventory.hpp"
+#include "JsonHelper.hpp"
 #include "LogDevotee.hpp"
 #include "mission.hpp"
 #include "Overlay.hpp"
@@ -126,11 +127,6 @@ static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& 
 	SOUP_ASSERT_UNREACHABLE;
 }
 
-[[nodiscard]] static std::time_t getExpiry(const soup::JsonObject& obj)
-{
-	return std::stoull(obj.at("Expiry").asObj().at("$date").asObj().at("$numberLong").asStr()) / 1000;
-}
-
 [[nodiscard]] static std::vector<std::pair<std::string, int>> getInterestingBountyRewards(const soup::JsonObject& syndicate)
 {
 	std::vector<std::pair<std::string, int>> res{};
@@ -239,7 +235,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 			const soup::JsonObject& cetus_syndicate = getSyndicate("CetusSyndicate");
 			// If we're 50 minutes away from bounty expiry, it means it's night time in cetus, which means narmer bounties are available on fortuna, instead.
-			if (soup::time::unixSecondsUntil(getExpiry(cetus_syndicate)) > 50 * 60)
+			if (soup::time::unixSecondsUntil(JsonHelper::readDate(cetus_syndicate.at("Expiry"))) > 50 * 60)
 			{
 				drawItemsList(rt, x, y, "CETUS BOUNTIES", getInterestingBountyRewards(cetus_syndicate));
 			}

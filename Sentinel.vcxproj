@@ -169,6 +169,7 @@
     <ClInclude Include="DataCache.hpp" />
     <ClInclude Include="GeoIpService.hpp" />
     <ClInclude Include="Inventory.hpp" />
+    <ClInclude Include="JsonHelper.hpp" />
     <ClInclude Include="LogDevotee.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="mission.hpp" />
