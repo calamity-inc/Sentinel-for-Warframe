@@ -4,7 +4,7 @@
 
 inline std::string current_missionType;
 inline std::string current_levelOverride;
-inline int hostage_cell;
+inline int hostage_cell = -1;
 inline int mission_stage;
 
 [[nodiscard]] inline const char* getCellName(const std::string& tileset, int cell)

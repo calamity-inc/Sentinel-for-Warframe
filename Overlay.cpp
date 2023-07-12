@@ -179,14 +179,14 @@ namespace Sentinel
 						}
 					}
 				}
-				if (amHost()
-					&& current_missionType == "MT_RESCUE"
+				if (current_missionType == "MT_RESCUE"
+					&& hostage_cell != -1
 					)
 				{
 					auto cell_name = getCellName(current_levelOverride, hostage_cell);
 					if (cell_name)
 					{
-						if (mission_stage == 1)
+						if (mission_stage < 2)
 						{
 							rt.drawCentredText(x, y, cell_name, RasterFont::simple8(), Rgb::WHITE, text_scale);
 							y += 40;
@@ -194,13 +194,10 @@ namespace Sentinel
 					}
 					else
 					{
-						if (mission_stage >= 1)
-						{
-							rt.drawCentredText(x, y, "Don't know this cell, please report once hostage is found!", RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-							rt.drawCentredText(x, y, soup::format("{}, cell {}", current_levelOverride, hostage_cell), RasterFont::simple8(), Rgb::WHITE, text_scale);
-							y += 40;
-						}
+						rt.drawCentredText(x, y, "Don't know this cell, please report once hostage is found!", RasterFont::simple8(), Rgb::WHITE, text_scale);
+						y += 40;
+						rt.drawCentredText(x, y, soup::format("{}, cell {}", current_levelOverride, hostage_cell), RasterFont::simple8(), Rgb::WHITE, text_scale);
+						y += 40;
 					}
 				}
 			});

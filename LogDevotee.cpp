@@ -164,6 +164,7 @@ namespace Sentinel
 					current_missionType.clear();
 					current_missionType += msg.substr(29, msg.size() - 29 - 2);
 					mission_stage = 0;
+					hostage_cell = -1;
 					mainWindowRedraw();
 					if (amHost())
 					{
@@ -190,31 +191,32 @@ namespace Sentinel
 						host_name = local_name;
 					}
 					std::cout << "[LogDevotee] Rescue target is in cell " << hostage_cell << "\n";
-				}
-				else if (msg == "HudRedux.lua: Queuing new transmission: RescueEnterObjectiveRoomTransmission\r\n")
-				{
-					std::cout << "[LogDevotee] RescueEnterObjectiveRoomTransmission\n";
-					mission_stage = 1;
 					if (amHost())
 					{
 						Overlay::redraw();
 					}
 				}
-				else if (msg == "HudRedux.lua: Queuing new transmission: RescueMissionSearchCellsTransmission\r\n")
+				else if (msg == "HudRedux.lua: Queuing new transmission: RescueEnterObjectiveRoomTransmission\r\n"
+					|| msg == "HudRedux.lua: Queuing new transmission: RescueMissionSearchCellsTransmission\r\n"
+					|| msg == "HudRedux.lua: Queuing new transmission: DRscMnUseConsolesLotus\r\n" // /Lotus/Levels/Proc/Orokin/OrokinMoonRescue
+					)
 				{
-					std::cout << "[LogDevotee] RescueMissionSearchCellsTransmission\n";
+					// This is quite delayed on Lua.
 					if (mission_stage != 1)
 					{
+						std::cout << "[LogDevotee] Entered holding area.\n";
 						mission_stage = 1;
-						if (amHost())
+						/*if (amHost())
 						{
 							Overlay::redraw();
-						}
+						}*/
 					}
 				}
-				else if (msg == "HudRedux.lua: Queuing new transmission: ObjectiveFoundRescueTransmission\r\n")
+				else if (msg == "HudRedux.lua: Queuing new transmission: ObjectiveFoundRescueTransmission\r\n"
+					|| msg == "HudRedux.lua: Queuing new transmission: DRscMnAgentFoundLotus\r\n" // /Lotus/Levels/Proc/Orokin/OrokinMoonRescue
+					)
 				{
-					std::cout << "[LogDevotee] ObjectiveFoundRescueTransmission\n";
+					std::cout << "[LogDevotee] Hostage found.\n";
 					mission_stage = 2;
 					if (amHost())
 					{
