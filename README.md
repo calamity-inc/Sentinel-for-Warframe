@@ -2,6 +2,8 @@
 
 Sentinel is an external helper and overlay for Warframe.
 
+- [Releases](https://github.com/calamity-inc/Sentinel-for-Warframe/releases)
+
 ## Features
 
 - Periodic Missions: Shows if the current Sortie, Archon Hunt, and Ayatan Treasure Hunt have been completed yet. (Won't show if inventory data is unavailable.)
