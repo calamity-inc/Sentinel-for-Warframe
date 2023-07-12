@@ -238,7 +238,19 @@ namespace Sentinel
 						item.codename += msg.substr(14, i - 14);
 						item.category = (msg.at(msg.find(" Cave selection for category: ", i) + 30) - '0');
 						std::lock_guard lock(duviri_items_mtx);
-						duviri_items.emplace_back(std::move(item));
+						bool found = false;
+						for (const auto& i : duviri_items)
+						{
+							if (i.codename == item.codename)
+							{
+								found = true;
+								break;
+							}
+						}
+						if (!found)
+						{
+							duviri_items.emplace_back(std::move(item));
+						}
 					}
 					else if (msg == "MapRedux.lua: Found 0 overrides.\r\n")
 					{
