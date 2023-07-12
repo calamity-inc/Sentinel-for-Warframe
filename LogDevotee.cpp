@@ -74,6 +74,18 @@ namespace Sentinel
 					std::cout << "[LogDevotee] Hello there, " << local_name << "!\n";
 					// could also get account id from this if we needed it
 				}
+				else if (msg == "MatchingService::HostSquadSession\r\n")
+				{
+					std::lock_guard lock(squad_members_mtx);
+					if (host_name != local_name
+						|| !squad_members.empty()
+						)
+					{
+						std::cout << "[LogDevotee] Creating a new squad even tho we didn't leave the previous squad?!\n";
+						host_name = local_name;
+						squad_members.clear();
+					}
+				}
 				else if (msg.substr(0, 16) == "AddSquadMember: ")
 				{
 					std::string data;
