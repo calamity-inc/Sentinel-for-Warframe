@@ -12,5 +12,7 @@ namespace Sentinel
 		inline static soup::UniquePtr<soup::JsonNode> root;
 
 		static void download();
+		
+		[[nodiscard]] static std::string getLastSortieMissionName();
 	};
 }

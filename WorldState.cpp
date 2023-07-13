@@ -56,4 +56,19 @@ namespace Sentinel
 			println("WorldState", "Beginning download.");
 		}
 	}
+
+	std::string WorldState::getLastSortieMissionName()
+	{
+		if (root)
+		{
+			std::string nodeName{};
+			for (const auto& variant : root->asObj().at("Sorties").asArr().at(0).asObj().at("Variants").asArr())
+			{
+				nodeName = variant.asObj().at("node").asStr();
+			}
+			nodeName.append("_Sortie");
+			return nodeName;
+		}
+		return {};
+	}
 }

@@ -218,7 +218,9 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 				for (const auto& mission : WorldState::root->asObj().at("Sorties").asArr())
 				{
 					bool completed = Inventory::hasCompletedLatestSortie(mission.asObj().at("_id").asObj().at("$oid").asStr());
-					if (completed)
+					if (completed
+						|| just_completed_sortie // inventory data may not be instantly updated to reflect the completion
+						)
 					{
 						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
 					}

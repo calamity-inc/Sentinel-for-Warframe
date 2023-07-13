@@ -2,10 +2,13 @@
 
 #include <string>
 
+inline std::string current_missionName;
 inline std::string current_missionType;
 inline std::string current_levelOverride;
 inline int hostage_cell = -1;
 inline int mission_stage;
+
+inline bool just_completed_sortie = false;
 
 [[nodiscard]] inline const char* getCellName(const std::string& tileset, int cell)
 {

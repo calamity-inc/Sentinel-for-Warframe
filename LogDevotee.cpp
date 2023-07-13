@@ -9,6 +9,7 @@
 #include "Overlay.hpp"
 #include "squad.hpp"
 #include "stdout.hpp"
+#include "WorldState.hpp"
 
 namespace Sentinel
 {
@@ -172,6 +173,18 @@ namespace Sentinel
 					host_name += msg.substr(54);
 					host_name.erase(host_name.size() - 5); // platform indicator + "\r\n"
 				}
+				else if (msg.substr(0, 37) == "ThemedSquadOverlay.lua: Host loading ")
+				{
+					std::string missionJson{};
+					missionJson += msg.substr(37, msg.size() - 37 - 20); // " with MissionInfo:\r\n"
+					processMissionJson(missionJson);
+				}
+				else if (msg.substr(0, 14) == "Client loaded ")
+				{
+					std::string missionJson{};
+					missionJson += msg.substr(14, msg.size() - 14 - 20); // " with MissionInfo:\r\n"
+					processMissionJson(missionJson);
+				}
 				else if (msg.substr(0, 29) == "OnStateStarted, mission type=")
 				{
 					current_missionType.clear();
@@ -188,6 +201,10 @@ namespace Sentinel
 				else if (msg.substr(0, 28) == "EOM missionLocationUnlocked=")
 				{
 					current_missionType.clear();
+					if (current_missionName == WorldState::getLastSortieMissionName())
+					{
+						just_completed_sortie = true;
+					}
 					mainWindowRedraw();
 					if (amHost())
 					{
@@ -325,5 +342,17 @@ namespace Sentinel
 			}
 		}
 		output_mutex.unlock();
+	}
+
+	void LogDevotee::processMissionJson(const std::string& missionJson)
+	{
+		// Void Fissure: {"difficulty":"","voidTier":"VoidT4","name":"SolNode162_ActiveMission","quest":""}
+		// Kuva Lich Controlled: {"difficulty":0.25,"name":"SolNode65_Nemesis","nemesis":{"faction":0,"name":"Demu Udoff","rank":1}}
+
+		just_completed_sortie = false;
+
+		auto root = soup::json::decode(missionJson);
+		SOUP_ASSERT(root);
+		current_missionName = root->asObj().at("name").asStr();
 	}
 }
