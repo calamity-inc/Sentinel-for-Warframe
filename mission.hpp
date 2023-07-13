@@ -110,7 +110,7 @@ inline int mission_stage;
 		{
 		case 1: return "Bottom, door 2/4."; // Prefab15
 		case 2: return "Bottom, door 1/4."; // Prefab16
-		case 3: return "Bottom, door 3/3."; // unconfirmed but what else would it be
+		case 3: return "Bottom, door 3/4."; // Prefab17
 		case 4: return "Bottom, door 4/4."; // Prefab18
 		}
 	}
