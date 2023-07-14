@@ -108,7 +108,7 @@ namespace Sentinel
 				{
 					std::string member_name;
 					member_name += msg.substr(19);
-					member_name.erase(member_name.find(' '));
+					member_name.erase(msg.find(" has been removed from the squad") - 19);
 					std::lock_guard lock(squad_members_mtx);
 					if (auto m = squadMemberByName(member_name); m != squad_members.end())
 					{
