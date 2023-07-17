@@ -7,17 +7,18 @@
 // For windows clients, the username is suffixed with U+E000 ().
 // Clients of other platforms have the U+2068 () suffix.
 
-// The mm value of PlayStation & Xbox clients has been confirmed via chat.
+// The mm values of PlayStation 4 & Xbox clients has been confirmed via chat.
 
 // IP address & port are only available for Windows clients because there's no cross-platform VOIP.
 
 enum Platform
 {
 	WINDOWS, // mm value looks like this: "AB0D55C3C7B9CD00F768C265"
-	PLAYSTATION, // mm value is their username (without the U+2068 suffix)
+	PLAYSTATION_5, // mm value is their username (without the U+2068 suffix)
+	PLAYSTATION_4, // mm value looks like this: "'%6;IYV9/5'=SE&9EA'       @8R069P-'- $          "
 	XBOX,   // mm value looks like this: "2535409713692376"
-	SWITCH, // mm value looks like this: "S]F;JEV7B5';K%&           @8P(7=P-'- $          "
-	        //                           "OQ69SE78EQF9              08X(7=P-'- $          "
+	SWITCH, // mm value looks like this: "8087900890037930173"
+	UNKNOWN
 };
 
 [[nodiscard]] inline const char* platformToString(Platform p)
@@ -25,9 +26,11 @@ enum Platform
 	switch (p)
 	{
 	case WINDOWS: return "Windows";
-	case PLAYSTATION: return "PlayStation";
+	case PLAYSTATION_5: return "PlayStation 5";
+	case PLAYSTATION_4: return "PlayStation 4";
 	case XBOX: return "Xbox";
 	case SWITCH: return "Nintendo Switch";
+	case UNKNOWN: return "Unknown";
 	}
 	SOUP_ASSERT_UNREACHABLE;
 }
@@ -58,13 +61,21 @@ struct SquadMember
 		}
 		if (getName() == mm)
 		{
-			return PLAYSTATION;
+			return PLAYSTATION_5;
 		}
-		if (mm.size() < 32)
+		if (mm.size() == 48)
+		{
+			return PLAYSTATION_4;
+		}
+		if (mm.size() == 16)
 		{
 			return XBOX;
 		}
-		return SWITCH;
+		if (mm.size() == 19)
+		{
+			return SWITCH;
+		}
+		return UNKNOWN;
 	}
 };
 
