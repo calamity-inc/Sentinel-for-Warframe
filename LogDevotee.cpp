@@ -176,7 +176,7 @@ namespace Sentinel
 				else if (msg.substr(0, 37) == "ThemedSquadOverlay.lua: Host loading ")
 				{
 					std::string missionJson{};
-					missionJson += msg.substr(37, msg.size() - 37 - 20); // " with MissionInfo:\r\n"
+					missionJson += msg.substr(37, msg.size() - 37 - 21); // " with MissionInfo: \r\n"
 					processMissionJson(missionJson);
 				}
 				else if (msg.substr(0, 14) == "Client loaded ")
@@ -351,8 +351,11 @@ namespace Sentinel
 
 		just_completed_sortie = false;
 
-		auto root = soup::json::decode(missionJson);
-		SOUP_ASSERT(root);
-		current_missionName = root->asObj().at("name").asStr();
+		if (!missionJson.empty()) // apparently it's empty for Ayatan Treasure Hunt
+		{
+			auto root = soup::json::decode(missionJson);
+			SOUP_ASSERT(root);
+			current_missionName = root->asObj().at("name").asStr();
+		}
 	}
 }
