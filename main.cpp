@@ -229,6 +229,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 						rt.drawText(x, y, "- Sortie", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 					}
 					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
+					break;
 				}
 
 				time_t week_began_at = 0;
@@ -245,6 +246,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 						rt.drawText(x, y, "- Archon Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 					}
 					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
+					break;
 				}
 
 				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
