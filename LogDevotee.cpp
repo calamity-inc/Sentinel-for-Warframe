@@ -89,15 +89,13 @@ namespace Sentinel
 				}
 				else if (msg.substr(0, 16) == "AddSquadMember: ")
 				{
-					std::string data;
-					data += msg.substr(16);
-					auto arr = string::explode(data, ", ");
 					SquadMember member;
-					member.name = arr.at(0);
+					auto name_end = msg.find(", mm=", 16);
+					member.name = msg.substr(16, name_end - 16);
 					if (member.getName() != local_name)
 					{
-						member.mm = arr.at(1).substr(3); // "mm="
-						// arr.at(2) == "squadCount=1"
+						auto mm_end = msg.find(", squadCount=", name_end);
+						member.mm = msg.substr(name_end + 5, mm_end - (name_end + 5));
 						std::cout << "[LogDevotee] New squad member: " << member.getName() << "\n";
 						std::lock_guard lock(squad_members_mtx);
 						squad_members.emplace_back(std::move(member));
