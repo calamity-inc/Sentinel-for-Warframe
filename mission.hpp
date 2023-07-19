@@ -106,7 +106,9 @@ inline bool just_completed_sortie = false;
 		case 8: return "Left, 1/4 from front.";
 		}
 	}
-	else if (tileset == "/Lotus/Levels/Proc/Grineer/GrineerShipyardsRescue") // Ceres
+	else if (tileset == "/Lotus/Levels/Proc/Grineer/GrineerShipyardsRescue" // Ceres
+		|| tileset == "/Lotus/Levels/Proc/Grineer/GrineerShipyardsRescueSimplified" // Recall: Ten-Zero Mission 1
+		)
 	{
 		// /Lotus/Levels/GrineerShipyards/ShipyardsRescue.level, 4 cells
 		switch (cell)
