@@ -7,8 +7,6 @@
 // For windows clients, the username is suffixed with U+E000 ().
 // Clients of other platforms have the U+2068 () suffix.
 
-// The mm values of PlayStation 4 & Xbox clients has been confirmed via chat.
-
 // IP address & port are only available for Windows clients because there's no cross-platform VOIP.
 
 enum Platform
