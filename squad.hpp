@@ -15,7 +15,7 @@ enum Platform
 	PLAYSTATION_5, // mm value is their username (without the U+2068 suffix)
 	PLAYSTATION_4, // mm value looks like this: "'%6;IYV9/5'=SE&9EA'       @8R069P-'- $          "
 	XBOX,   // mm value looks like this: "2535409713692376"
-	SWITCH, // mm value looks like this: "8087900890037930173"
+	SWITCH, // mm value looks like "8087900890037930173" or "17479101469666850951"
 	UNKNOWN
 };
 
@@ -69,7 +69,7 @@ struct SquadMember
 		{
 			return XBOX;
 		}
-		if (mm.size() == 19)
+		if (mm.size() == 19 || mm.size() == 20)
 		{
 			return SWITCH;
 		}
