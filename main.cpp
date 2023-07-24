@@ -177,7 +177,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 	WorldState::download();
 
-	w = soup::Window::create("Sentinel for Warframe", 320, 360, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
+	w = soup::Window::create("Sentinel for Warframe", 320, 380, LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(101)));
 	WindowCommons::init(w);
 	w.setDrawFunc([](soup::Window w, soup::RenderTarget& rt)
 	{
