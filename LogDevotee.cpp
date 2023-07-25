@@ -347,13 +347,17 @@ namespace Sentinel
 		// Void Fissure: {"difficulty":"","voidTier":"VoidT4","name":"SolNode162_ActiveMission","quest":""}
 		// Kuva Lich Controlled: {"difficulty":0.25,"name":"SolNode65_Nemesis","nemesis":{"faction":0,"name":"Demu Udoff","rank":1}}
 
+		current_missionName.clear();
 		just_completed_sortie = false;
 
 		if (!missionJson.empty()) // apparently it's empty for Ayatan Treasure Hunt
 		{
 			auto root = soup::json::decode(missionJson);
 			SOUP_ASSERT(root);
-			current_missionName = root->asObj().at("name").asStr();
+			if (root->asObj().contains("name")) // bounties sometimes only have "jobLevelGenerationSeed"
+			{
+				current_missionName = root->asObj().at("name").asStr();
+			}
 		}
 	}
 }
