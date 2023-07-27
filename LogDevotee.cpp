@@ -43,6 +43,8 @@ namespace Sentinel
 		return buffer;
 	}
 
+	static std::string punchthrough_failure_addr{};
+
 	void LogDevotee::process()
 	{
 		using namespace soup;
@@ -135,15 +137,44 @@ namespace Sentinel
 						data.pop_back(); // '\r'
 						data.pop_back(); // '\n'
 						data.pop_back(); // ')'
-						auto sep = data.find(':');
-						member->ip = data.substr(0, sep);
-						member->port = data.substr(sep + 1);
+						member->setAddress(data);
 						std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << member->ip << "\n";
 						Overlay::redraw();
 					}
 					else
 					{
 						std::cout << "[LogDevotee] Did not find a member with mm=" << data.substr(0, 24) << "\n";
+					}
+				}
+				else if (msg.substr(0, 27) == "Failed to punch-through to ")
+				{
+					std::string data;
+					data += msg.substr(53);
+					data.pop_back(); // '\r'
+					data.pop_back(); // '\n'
+					data.pop_back(); // ')'
+					punchthrough_failure_addr = std::move(data);
+				}
+				else if (msg.substr(0, 32) == "VOIP: punch-through failure for ")
+				{
+					std::string mm;
+					mm += msg.substr(32, msg.size() - 32 - 2);
+					if (auto member = squadMemberByMM(mm))
+					{
+						if (!punchthrough_failure_addr.empty())
+						{
+							member->setAddress(punchthrough_failure_addr);
+							punchthrough_failure_addr.clear();
+							std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << member->ip << "\n";
+						}
+						else
+						{
+							std::cout << "[LogDevotee] VOIP punch-through failure but no address to go along with it\n";
+						}
+					}
+					else
+					{
+						std::cout << "[LogDevotee] Did not find a member with mm=" << mm << "\n";
 					}
 				}
 				else if (msg.substr(0, 24) == "JoinSquadSessionCallback")

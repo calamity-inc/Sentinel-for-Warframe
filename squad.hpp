@@ -75,6 +75,13 @@ struct SquadMember
 		}
 		return UNKNOWN;
 	}
+
+	void setAddress(const std::string& data)
+	{
+		auto sep = data.find(':');
+		ip = data.substr(0, sep);
+		port = data.substr(sep + 1);
+	}
 };
 
 inline std::string local_name;
