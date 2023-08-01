@@ -79,13 +79,14 @@ namespace Sentinel
 
 			data_as_of = soup::time::unixFromFile(std::filesystem::last_write_time(path));
 
-			auto decrypted = soup::aes::decryptCBC(
-				soup::string::fromFilePath(path),
-				std::string((const char*)key, 16),
-				std::string((const char*)iv, 16)
+			auto data = soup::string::fromFilePath(path);
+			soup::aes::decryptCBCInplace(
+				(uint8_t*)data.data(), data.size(),
+				key, 16,
+				iv
 			);
-			soup::aes::pkcs7Unpad(decrypted);
-			root = soup::json::decode(decrypted);
+			soup::aes::pkcs7Unpad(data);
+			root = soup::json::decode(data);
 		}
 
 #if WRITE_JSON_ON_READ
