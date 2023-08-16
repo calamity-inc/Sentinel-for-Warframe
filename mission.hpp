@@ -18,10 +18,10 @@ inline bool just_completed_sortie = false;
 		switch (cell)
 		{
 		case 1: return "Top, right, front."; // Prefab7
-		case 2: return "Right, facing front.";
-		case 3: return "Left, facing right, front.";
-		case 4: return "Right, facing left, back."; // Prefab5 or Prefab12
-		case 5: return "Left, facing front."; // Prefab14
+		case 2: return "Bottom, right, back.";
+		case 3: return "Bottom, left side, front.";
+		case 4: return "Bottom, right side, back."; // Prefab5 or Prefab12
+		case 5: return "Bottom, left, back."; // Prefab14
 		case 6: return "Top, left, back."; // Prefab16
 		}
 	}
