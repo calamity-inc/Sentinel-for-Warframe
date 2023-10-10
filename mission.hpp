@@ -67,7 +67,9 @@ inline bool just_completed_sortie = false;
 		case 9: return "Top left, back.";
 		}
 	}
-	else if (tileset == "/Lotus/Levels/Proc/Corpus/CorpusGasCityRescue") // Jupiter
+	else if (tileset == "/Lotus/Levels/Proc/Corpus/CorpusGasCityRescue" // Jupiter
+		|| tileset == "/Lotus/Levels/Proc/Corpus/NarmerCorpusGasCityRescue" // Archon Hunt
+		)
 	{
 		// 4 cells
 		switch (cell)
