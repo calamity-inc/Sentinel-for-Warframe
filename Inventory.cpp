@@ -80,8 +80,8 @@ namespace Sentinel
 			data_as_of = soup::time::unixFromFile(std::filesystem::last_write_time(path));
 
 			auto data = soup::string::fromFilePath(path);
-			soup::aes::decryptCBCInplace(
-				(uint8_t*)data.data(), data.size(),
+			soup::aes::cbcDecrypt(
+				reinterpret_cast<uint8_t*>(data.data()), data.size(),
 				key, 16,
 				iv
 			);

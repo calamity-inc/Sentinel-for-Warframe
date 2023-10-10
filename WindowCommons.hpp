@@ -40,7 +40,7 @@ namespace Sentinel
 
 			if (pin_focused)
 			{
-				rt.drawRect(rt.width - 40, 0, 20, 20, soup::Rgb::GRAY);
+				rt.drawRect(rt.width - 40, 0, 20, 20, soup::Rgb::GREY);
 			}
 			if (is_topmost)
 			{

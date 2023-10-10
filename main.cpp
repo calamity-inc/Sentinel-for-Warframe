@@ -99,7 +99,7 @@ static void drawCountedItem(soup::RenderTarget& rt, unsigned int x, unsigned int
 			}
 		}
 	}
-	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted || mastered ? soup::Rgb::GRAY : soup::Rgb::WHITE, TEXT_SCALE);
+	rt.drawText(x, y, std::move(text), soup::RasterFont::simple8(), owned || crafted || mastered ? soup::Rgb::GREY : soup::Rgb::WHITE, TEXT_SCALE);
 }
 
 static void drawHeading(soup::RenderTarget& rt, unsigned int x, unsigned int& y, const char* heading)
@@ -222,7 +222,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 						|| just_completed_sortie // inventory data may not be instantly updated to reflect the completion
 						)
 					{
-						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
+						rt.drawText(x, y, "- Sortie (completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
 					}
 					else
 					{
@@ -239,7 +239,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					bool completed = Inventory::hasCompletedLatestArchonHunt(mission.asObj().at("_id").asObj().at("$oid").asStr());
 					if (completed)
 					{
-						rt.drawText(x, y, "- Archon Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
+						rt.drawText(x, y, "- Archon Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
 					}
 					else
 					{
@@ -251,7 +251,7 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
 				{
-					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GRAY, TEXT_SCALE);
+					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
 				}
 				else
 				{

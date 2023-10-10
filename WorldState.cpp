@@ -24,7 +24,7 @@ namespace Sentinel
 		{
 			if (hrt.tickUntilDone())
 			{
-				if (hrt.res.has_value())
+				if (hrt.result.has_value())
 				{
 					if (WorldState::logging)
 					{
@@ -32,7 +32,7 @@ namespace Sentinel
 						WorldState::logging = false;
 					}
 					WorldState::data_as_of = soup::time::unixSeconds();
-					WorldState::root = soup::json::decode(hrt.res->body);
+					WorldState::root = soup::json::decode(hrt.result->body);
 					mainWindowRedraw();
 				}
 				else
