@@ -51,7 +51,9 @@ inline bool just_completed_sortie = false;
 		case 8: return "Left corridor, left, front.";
 		}
 	}
-	else if (tileset == "/Lotus/Levels/Proc/Grineer/GrineerSettlementRescue") // Mars
+	else if (tileset == "/Lotus/Levels/Proc/Grineer/GrineerSettlementRescue" // Mars
+		|| tileset == "/Lotus/Levels/Proc/Grineer/NarmerGrineerSettlementRescue" // Mars, Archon Hunt
+		)
 	{
 		// /Lotus/Levels/GrineerSettlement/CmpRescue.level, 9 cells
 		switch (cell)
