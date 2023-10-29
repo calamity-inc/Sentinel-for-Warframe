@@ -59,7 +59,7 @@ namespace Sentinel
 				return;
 			}
 		}
-		char buf[4096];
+		char buf[0x2000];
 		output_mutex.lock();
 		while (fgets_complete(buf, sizeof(buf), f) != nullptr)
 		{
