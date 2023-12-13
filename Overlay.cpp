@@ -158,11 +158,13 @@ namespace Sentinel
 						{
 							if (GeoIpService::available)
 							{
-								if (auto loc = GeoIpService::get().getLocationByIpv4(IpAddr(member.ip).getV4NativeEndian()))
+								IpAddr ipaddr;
+								SOUP_ASSERT(ipaddr.fromString(member.ip));
+								if (auto loc = GeoIpService::get().getLocationByIpv4(ipaddr.getV4NativeEndian()))
 								{
 									trivia.emplace_back(getCountryName(loc->country_code.c_str()));
 								}
-								if (auto as = GeoIpService::get().getAsByIpv4(IpAddr(member.ip).getV4NativeEndian()))
+								if (auto as = GeoIpService::get().getAsByIpv4(ipaddr.getV4NativeEndian()))
 								{
 									trivia.emplace_back(as->name);
 									if (as->isHosting())
