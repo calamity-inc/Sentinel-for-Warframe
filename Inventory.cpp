@@ -85,7 +85,7 @@ namespace Sentinel
 				key, 16,
 				iv
 			);
-			soup::aes::pkcs7Unpad(data);
+			SOUP_ASSERT(soup::aes::pkcs7Unpad(data));
 			root = soup::json::decode(data);
 		}
 
