@@ -209,11 +209,14 @@ namespace Sentinel
 		std::lock_guard lock(mtx);
 		if (root != nullptr)
 		{
-			for (const auto& mission : root->asObj().at("LastSortieReward").asArr())
+			if (auto e = root->asObj().find("LastSortieReward"))
 			{
-				if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+				for (const auto& mission : e->asArr())
 				{
-					return true;
+					if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+					{
+						return true;
+					}
 				}
 			}
 		}
@@ -225,11 +228,14 @@ namespace Sentinel
 		std::lock_guard lock(mtx);
 		if (root != nullptr)
 		{
-			for (const auto& mission : root->asObj().at("LastLiteSortieReward").asArr())
+			if (auto e = root->asObj().find("LastLiteSortieReward"))
 			{
-				if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+				for (const auto& mission : e->asArr())
 				{
-					return true;
+					if (mission.asObj().at("SortieId").asObj().at("$oid").asStr() == oid)
+					{
+						return true;
+					}
 				}
 			}
 		}
