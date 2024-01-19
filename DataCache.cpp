@@ -12,7 +12,7 @@ namespace Sentinel
 		if (std::filesystem::is_directory(path))
 		{
 			path.append(L"\\DataCache.json");
-			root = soup::json::decode(soup::string::fromFilePath(path));
+			root = soup::json::decode(soup::string::fromFile(path));
 		}
 		else
 		{
