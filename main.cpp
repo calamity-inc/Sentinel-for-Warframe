@@ -160,20 +160,14 @@ static void drawItemsList(soup::RenderTarget& rt, unsigned int x, unsigned int& 
 
 int entrypoint(std::vector<std::string>&& args, bool console)
 {
-	println("main", "Welcome to Sentinel. First of all, I'm going to catch up with the most recent game session.");
 	DataCache::init();
 	DuviriTarot::readFromCache();
-	LogDevotee::process();
-	if (LogDevotee::isGameRunning())
+	if (ProcessWatcher::isGameRunning())
 	{
-		Inventory::load();
-		println("main", "All caught up!");
+		println("main", "Game is running, catching up with current session...");
+		LogDevotee::process();
 	}
-	else
-	{
-		println("main", "Looks like the game is not running right now.");
-		Inventory::load();
-	}
+	Inventory::load();
 
 	WorldState::download();
 
@@ -191,11 +185,11 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 
 		if (Inventory::data_as_of)
 		{
-			rt.drawText(x, y, soup::format("Inventory data for {} as of {}", local_name, soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
+			rt.drawText(x, y, soup::format("Inventory data as of {}", soup::time::datetimeLocal(Inventory::data_as_of).toString()), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
 		else
 		{
-			rt.drawText(x, y, soup::format("Inventory data for {} unavailable", local_name), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
+			rt.drawText(x, y, "Inventory data unavailable", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
 		}
 		y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 
@@ -391,7 +385,8 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			{
 				if (LogDevotee::isGameRunning())
 				{
-					LogDevotee::process();
+					println("main", "Game process doesn't exist anymore, but LogDevotee didn't deinit itself. Did you alt+f4 the game?!");
+					LogDevotee::deinit();
 				}
 			}
 
