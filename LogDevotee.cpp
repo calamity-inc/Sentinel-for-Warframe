@@ -131,9 +131,10 @@ namespace Sentinel
 				{
 					std::string data;
 					data += msg.substr(31);
-					if (auto member = squadMemberByMM(data.substr(0, 24)))
+					auto sep = data.find(" (");
+					if (auto member = squadMemberByMM(data.substr(0, sep)))
 					{
-						data.erase(0, 26); // mm + " ("
+						data.erase(0, sep + 2); // mm + " ("
 						data.pop_back(); // '\r'
 						data.pop_back(); // '\n'
 						data.pop_back(); // ')'
@@ -143,7 +144,7 @@ namespace Sentinel
 					}
 					else
 					{
-						std::cout << "[LogDevotee] Did not find a member with mm=" << data.substr(0, 24) << "\n";
+						std::cout << "[LogDevotee] Did not find a member with mm=" << data.substr(0, sep) << "\n";
 					}
 				}
 				else if (msg.substr(0, 27) == "Failed to punch-through to ")
