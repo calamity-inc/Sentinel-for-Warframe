@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cidr.hpp" />
     <ClInclude Include="data.hpp" />
     <ClInclude Include="DataCache.hpp" />
     <ClInclude Include="GeoIpService.hpp" />

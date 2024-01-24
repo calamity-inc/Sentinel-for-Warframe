@@ -1,7 +1,9 @@
 #include "LogDevotee.hpp"
 
+#include <soup/IpAddr.hpp>
 #include <soup/string.hpp>
 
+#include "cidr.hpp"
 #include "DuviriTarot.hpp"
 #include "Inventory.hpp"
 #include "main.hpp"
@@ -41,6 +43,14 @@ namespace Sentinel
 			return NULL;
 		}
 		return buffer;
+	}
+
+	[[nodiscard]] static std::pair<std::string, std::string> parse_address(const std::string& data)
+	{
+		auto sep = data.find(':');
+		auto ip = data.substr(0, sep);
+		auto port = data.substr(sep + 1);
+		return { std::move(ip), std::move(port) };
 	}
 
 	static std::string punchthrough_failure_addr{};
@@ -138,8 +148,15 @@ namespace Sentinel
 						data.pop_back(); // '\r'
 						data.pop_back(); // '\n'
 						data.pop_back(); // ')'
-						member->setAddress(data);
-						std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << member->ip << "\n";
+						auto [ip, port] = parse_address(data);
+						soup::IpAddr ipaddr;
+						SOUP_ASSERT(ipaddr.fromString(ip));
+						if (member->ip.empty() || !akamai.contains(ipaddr)) // Don't use an Akamai IP unless it's the first thing we're getting.
+						{
+							std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << ip << "\n";
+							member->ip = std::move(ip);
+							member->port = std::move(port);
+						}
 						Overlay::redraw();
 					}
 					else
@@ -164,9 +181,11 @@ namespace Sentinel
 					{
 						if (!punchthrough_failure_addr.empty())
 						{
-							member->setAddress(punchthrough_failure_addr);
+							auto [ip, port] = parse_address(punchthrough_failure_addr);
 							punchthrough_failure_addr.clear();
-							std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << member->ip << "\n";
+							std::cout << "[LogDevotee] Got IP for " << member->getName() << ": " << ip << "\n";
+							member->ip = std::move(ip);
+							member->port = std::move(port);
 						}
 						else
 						{

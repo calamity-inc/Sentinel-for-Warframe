@@ -20,6 +20,7 @@
     </ClInclude>
     <ClInclude Include="DataCache.hpp" />
     <ClInclude Include="JsonHelper.hpp" />
+    <ClInclude Include="cidr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
