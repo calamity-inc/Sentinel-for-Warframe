@@ -9,7 +9,7 @@
 
 namespace Sentinel
 {
-	inline soup::DetachedScheduler sched{};
+	static soup::DetachedScheduler sched{};
 
 	struct WorldStateDownloadTask : public soup::Task
 	{
