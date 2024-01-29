@@ -262,4 +262,30 @@ namespace Sentinel
 		}
 		return latest;
 	}
+
+	int Inventory::getNetracellCompletions()
+	{
+		std::lock_guard lock(mtx);
+		if (root != nullptr)
+		{
+			if (auto e = root->asObj().find("EntratiVaultCountLastPeriod"))
+			{
+				return e->asInt();
+			}
+		}
+		return 0;
+	}
+
+	time_t Inventory::getNetracellCompletionsResetTime()
+	{
+		std::lock_guard lock(mtx);
+		if (root != nullptr)
+		{
+			if (auto e = root->asObj().find("EntratiVaultCountResetDate"))
+			{
+				return JsonHelper::readDate(*e);
+			}
+		}
+		return 0;
+	}
 }

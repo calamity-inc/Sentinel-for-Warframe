@@ -257,6 +257,21 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 					break;
 				}
+
+				int netracell_completions = Inventory::getNetracellCompletions();
+				if (week_began_at >= Inventory::getNetracellCompletionsResetTime())
+				{
+					netracell_completions = 0;
+				}
+				if (netracell_completions == 5)
+				{
+					rt.drawText(x, y, "- Netracells (5/5 completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
+				}
+				else
+				{
+					rt.drawText(x, y, soup::format("- Netracells ({}/5 completed)", netracell_completions), soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
+				}
+				y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 			}
 
 			drawItemsList(rt, x, y, "BOUNTIES", getInterestingBountyRewards(getSyndicate("CetusSyndicate")));
