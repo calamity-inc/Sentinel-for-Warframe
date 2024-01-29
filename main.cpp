@@ -209,6 +209,23 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 			{
 				drawHeading(rt, x, y, "PERIODIC MISSIONS");
 
+				time_t week_began_at = 0;
+				for (const auto& mission : WorldState::root->asObj().at("LiteSorties").asArr())
+				{
+					week_began_at = JsonHelper::readDate(mission.asObj().at("Activation"));
+					break;
+				}
+
+				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
+				{
+					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
+				}
+				else
+				{
+					rt.drawText(x, y, "- Ayatan Treasure Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
+				}
+				y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
+
 				for (const auto& mission : WorldState::root->asObj().at("Sorties").asArr())
 				{
 					bool completed = Inventory::hasCompletedLatestSortie(mission.asObj().at("_id").asObj().at("$oid").asStr());
@@ -226,10 +243,8 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					break;
 				}
 
-				time_t week_began_at = 0;
 				for (const auto& mission : WorldState::root->asObj().at("LiteSorties").asArr())
 				{
-					week_began_at = JsonHelper::readDate(mission.asObj().at("Activation"));
 					bool completed = Inventory::hasCompletedLatestArchonHunt(mission.asObj().at("_id").asObj().at("$oid").asStr());
 					if (completed)
 					{
@@ -242,16 +257,6 @@ int entrypoint(std::vector<std::string>&& args, bool console)
 					y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 					break;
 				}
-
-				if (Inventory::getLastAyatanTreasureHuntCompletion() >= week_began_at)
-				{
-					rt.drawText(x, y, "- Ayatan Treasure Hunt (completed)", soup::RasterFont::simple8(), soup::Rgb::GREY, TEXT_SCALE);
-				}
-				else
-				{
-					rt.drawText(x, y, "- Ayatan Treasure Hunt", soup::RasterFont::simple8(), soup::Rgb::WHITE, TEXT_SCALE);
-				}
-				y += (TEXT_SCALE * 8) + TEXT_PADDING_BOTTOM;
 			}
 
 			drawItemsList(rt, x, y, "BOUNTIES", getInterestingBountyRewards(getSyndicate("CetusSyndicate")));
