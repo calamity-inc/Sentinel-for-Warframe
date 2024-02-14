@@ -248,14 +248,17 @@ namespace Sentinel
 		time_t latest = 0;
 		if (root != nullptr)
 		{
-			for (const auto& mission : root->asObj().at("PeriodicMissionCompletions").asArr())
+			if (auto e = root->asObj().find("PeriodicMissionCompletions"))
 			{
-				if (mission.asObj().at("tag").asStr().value.substr(0, 12) == "TreasureHunt")
+				for (const auto& mission : e->asArr())
 				{
-					time_t date = JsonHelper::readDate(mission.asObj().at("date"));
-					if (date > latest)
+					if (mission.asObj().at("tag").asStr().value.substr(0, 12) == "TreasureHunt")
 					{
-						latest = date;
+						time_t date = JsonHelper::readDate(mission.asObj().at("date"));
+						if (date > latest)
+						{
+							latest = date;
+						}
 					}
 				}
 			}
