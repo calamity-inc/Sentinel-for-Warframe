@@ -31,6 +31,6 @@ namespace Sentinel
 		path.append(L"\\DataCache.json");
 		soup::FileWriter fw(path);
 		auto encoded = root->encodePretty();
-		fw.write(encoded.data(), encoded.size());
+		fw.raw(encoded.data(), encoded.size());
 	}
 }

@@ -96,7 +96,7 @@ namespace Sentinel
 
 			soup::FileWriter fw(path);
 			auto pretty = root->encodePretty();
-			fw.write(pretty.data(), pretty.size());
+			fw.raw(pretty.data(), pretty.size());
 		}
 #endif
 
@@ -112,7 +112,7 @@ namespace Sentinel
 
 			soup::FileWriter fw(path);
 			auto pretty = root->encodePretty();
-			fw.write(pretty.data(), pretty.size());
+			fw.raw(pretty.data(), pretty.size());
 		}
 #endif
 
