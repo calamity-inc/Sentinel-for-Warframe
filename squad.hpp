@@ -16,6 +16,7 @@ enum Platform
 	PLAYSTATION_4, // mm value looks like this: "'%6;IYV9/5'=SE&9EA'       @8R069P-'- $          "
 	XBOX,   // mm value looks like this: "2535409713692376"
 	SWITCH, // mm value looks like "8087900890037930173" or "17479101469666850951"
+	IOS,	// mm value looks like this: "51a755ac1a4d807a03000062"
 	UNKNOWN
 };
 
@@ -28,6 +29,7 @@ enum Platform
 	case PLAYSTATION_4: return "PlayStation 4";
 	case XBOX: return "Xbox";
 	case SWITCH: return "Nintendo Switch";
+	case IOS: return "iOS";
 	case UNKNOWN: return "Unknown";
 	}
 	SOUP_ASSERT_UNREACHABLE;
@@ -72,6 +74,10 @@ struct SquadMember
 		if (mm.size() == 19 || mm.size() == 20)
 		{
 			return SWITCH;
+		}
+		if (mm.size() == 24)
+		{
+			return IOS;
 		}
 		return UNKNOWN;
 	}
