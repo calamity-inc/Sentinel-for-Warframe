@@ -167,7 +167,7 @@ namespace Sentinel
 								if (auto as = GeoIpService::get().getAsByIpv4(ipaddr.getV4NativeEndian()))
 								{
 									trivia.emplace_back(as->name);
-									if (as->isHosting())
+									if (as->isHosting(GeoIpService::get()))
 									{
 										trivia.emplace_back("VPN");
 									}
